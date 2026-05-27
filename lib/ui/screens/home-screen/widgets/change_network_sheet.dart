@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:wallet_cryptomask/core/providers/network_provider/network_provider.dart';
-import 'package:wallet_cryptomask/core/providers/token_provider/token_provider.dart';
-import 'package:wallet_cryptomask/core/providers/wallet_provider/wallet_provider.dart';
-import 'package:wallet_cryptomask/ui/shared/wallet_text.dart';
+import 'package:felix_wallet_crypto/core/providers/network_provider/network_provider.dart';
+import 'package:felix_wallet_crypto/core/providers/token_provider/token_provider.dart';
+import 'package:felix_wallet_crypto/core/providers/wallet_provider/wallet_provider.dart';
+import 'package:felix_wallet_crypto/ui/shared/wallet_text.dart';
 
 class ChangeNetworkSheet extends StatelessWidget {
   final String address;

@@ -1,8 +1,8 @@
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
-import 'package:wallet_cryptomask/ui/shared/avatar_widget.dart';
-import 'package:wallet_cryptomask/ui/utils/App_Colors.dart';
+import 'package:felix_wallet_crypto/ui/shared/avatar_widget.dart';
+import 'package:felix_wallet_crypto/ui/utils/App_Colors.dart';
 
 class TokenTile extends StatefulWidget {
   final String symbol;

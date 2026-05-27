@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:wallet_cryptomask/constant.dart';
-import 'package:wallet_cryptomask/core/providers/wallet_provider/wallet_provider.dart';
-import 'package:wallet_cryptomask/core/providers/browser_provider/browser_provider.dart';
-import 'package:wallet_cryptomask/ui/shared/wallet_text.dart';
-import 'package:wallet_cryptomask/ui/tabs/browser/widgets/browser_url_field.dart';
-import 'package:wallet_cryptomask/ui/shared/network_dart.dart';
-import 'package:wallet_cryptomask/ui/utils/spaces.dart';
+import 'package:felix_wallet_crypto/constant.dart';
+import 'package:felix_wallet_crypto/core/providers/wallet_provider/wallet_provider.dart';
+import 'package:felix_wallet_crypto/core/providers/browser_provider/browser_provider.dart';
+import 'package:felix_wallet_crypto/ui/shared/wallet_text.dart';
+import 'package:felix_wallet_crypto/ui/tabs/browser/widgets/browser_url_field.dart';
+import 'package:felix_wallet_crypto/ui/shared/network_dart.dart';
+import 'package:felix_wallet_crypto/ui/utils/spaces.dart';
 
 class BrowserUrlBar extends StatefulWidget {
   final Function(String, BrowserProvider) onUrlSubmit;
@@ -14,13 +14,14 @@ class BrowserUrlBar extends StatefulWidget {
   final String url;
   final Function() openDrawer;
   final BrowserProvider webViewModel;
-  const BrowserUrlBar(
-      {super.key,
-      required this.webViewModel,
-      required this.onUrlSubmit,
-      required this.certified,
-      required this.url,
-      required this.openDrawer});
+  const BrowserUrlBar({
+    super.key,
+    required this.webViewModel,
+    required this.onUrlSubmit,
+    required this.certified,
+    required this.url,
+    required this.openDrawer,
+  });
 
   @override
   State<BrowserUrlBar> createState() => _BrowserUrlBarState();
@@ -35,9 +36,7 @@ class _BrowserUrlBarState extends State<BrowserUrlBar> {
   bool showUrl = false;
   OutlineInputBorder outlineBorder = const OutlineInputBorder(
     borderSide: BorderSide(color: Colors.transparent, width: 0.0),
-    borderRadius: BorderRadius.all(
-      Radius.circular(50.0),
-    ),
+    borderRadius: BorderRadius.all(Radius.circular(50.0)),
   );
 
   @override
@@ -69,89 +68,79 @@ class _BrowserUrlBarState extends State<BrowserUrlBar> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Icon(
-          Icons.more_vert,
-          color: Colors.transparent,
-        ),
+        const Icon(Icons.more_vert, color: Colors.transparent),
         addWidth(SpacingSize.xs),
         Expanded(
           child: GestureDetector(
             onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => BrowserUrlField(
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => BrowserUrlField(
                     onUrlSubmit: widget.onUrlSubmit,
                     webViewModel: widget.webViewModel,
                     certified: widget.certified,
-                    url: widget.url),
-              ));
+                    url: widget.url,
+                  ),
+                ),
+              );
             },
             child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(vertical: 7),
-                    decoration: BoxDecoration(
-                        color: kPrimaryColor.withAlpha(30),
-                        borderRadius: BorderRadius.circular(5)),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(
-                          Icons.lock,
-                          size: 14,
-                          color: Colors.green,
-                        ),
-                        const SizedBox(
-                          width: 3,
-                        ),
-                        Text(
-                          urlController.text.toString().contains(
-                                  "file:///android_asset/flutter_assets/assets/html/homepage.html")
-                              ? "http://www.google.com"
-                              : Uri.parse(urlController.text).authority,
-                          overflow: TextOverflow.fade,
-                          style: const TextStyle(
-                              fontSize: 13, color: Colors.black),
-                        ),
-                        const Icon(
-                          Icons.lock,
-                          size: 14,
-                          color: Colors.transparent,
-                        ),
-                        const SizedBox(
-                          width: 3,
-                        ),
-                      ],
-                    ),
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 7),
+                  decoration: BoxDecoration(
+                    color: kPrimaryColor.withAlpha(30),
+                    borderRadius: BorderRadius.circular(5),
                   ),
-                  const SizedBox(
-                    height: 2,
-                  ),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      NetworkDot(
-                        color:
-                            getWalletProvider(context).activeNetwork.dotColor,
-                        radius: 10,
-                      ),
-                      addWidth(SpacingSize.xxs),
+                      const Icon(Icons.lock, size: 14, color: Colors.green),
+                      const SizedBox(width: 3),
                       Text(
-                        getWalletProvider(context).activeNetwork.networkName,
-                        style:
-                            const TextStyle(fontSize: 12, color: Colors.black),
-                        textAlign: TextAlign.center,
+                        urlController.text.toString().contains(
+                              "file:///android_asset/flutter_assets/assets/html/homepage.html",
+                            )
+                            ? "http://www.google.com"
+                            : Uri.parse(urlController.text).authority,
+                        overflow: TextOverflow.fade,
+                        style: const TextStyle(
+                          fontSize: 13,
+                          color: Colors.black,
+                        ),
                       ),
-                      addWidth(SpacingSize.xxs),
-                      const NetworkDot(
+                      const Icon(
+                        Icons.lock,
+                        size: 14,
                         color: Colors.transparent,
-                        radius: 10,
                       ),
+                      const SizedBox(width: 3),
                     ],
                   ),
-                ]),
+                ),
+                const SizedBox(height: 2),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    NetworkDot(
+                      color: getWalletProvider(context).activeNetwork.dotColor,
+                      radius: 10,
+                    ),
+                    addWidth(SpacingSize.xxs),
+                    Text(
+                      getWalletProvider(context).activeNetwork.networkName,
+                      style: const TextStyle(fontSize: 12, color: Colors.black),
+                      textAlign: TextAlign.center,
+                    ),
+                    addWidth(SpacingSize.xxs),
+                    const NetworkDot(color: Colors.transparent, radius: 10),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
         addWidth(SpacingSize.xs),
@@ -166,16 +155,11 @@ class _BrowserUrlBarState extends State<BrowserUrlBar> {
                     .localStorage
                     .clear();
               },
-              child: const WalletText(
-                localizeKey: 'clearBrowserStorage',
-              ),
-            )
+              child: const WalletText(localizeKey: 'clearBrowserStorage'),
+            ),
           ],
-          child: const Icon(
-            Icons.more_vert,
-            color: Colors.red,
-          ),
-        )
+          child: const Icon(Icons.more_vert, color: Colors.red),
+        ),
       ],
     );
   }

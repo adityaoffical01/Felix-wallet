@@ -4,7 +4,7 @@
 
 import 'dart:convert';
 
-import 'package:wallet_cryptomask/core/remote/response-model/register_user.dart';
+import 'package:felix_wallet_crypto/core/remote/response-model/register_user.dart';
 
 Message messageFromJson(String str) => Message.fromJson(json.decode(str));
 
@@ -47,15 +47,15 @@ class Message {
   }
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "forId": forId,
-        "message": message,
-        "attachmentLink": attachment?.toJson(),
-        "isAdminMessage": isAdminMessage,
-        "timestamp": timestamp.toIso8601String(),
-        "user": user.toJson(),
-        "seen": seen
-      };
+    "id": id,
+    "forId": forId,
+    "message": message,
+    "attachmentLink": attachment?.toJson(),
+    "isAdminMessage": isAdminMessage,
+    "timestamp": timestamp.toIso8601String(),
+    "user": user.toJson(),
+    "seen": seen,
+  };
 }
 
 class Media {
@@ -64,20 +64,26 @@ class Media {
   String fileName;
   String mediaType;
 
-  Media(
-      {required this.id,
-      required this.url,
-      required this.fileName,
-      required this.mediaType});
+  Media({
+    required this.id,
+    required this.url,
+    required this.fileName,
+    required this.mediaType,
+  });
 
   factory Media.fromJson(Map<String, dynamic> json) {
     return Media(
-        id: json["id"],
-        fileName: json['fileName'],
-        mediaType: json['mediaType'],
-        url: json['url']);
+      id: json["id"],
+      fileName: json['fileName'],
+      mediaType: json['mediaType'],
+      url: json['url'],
+    );
   }
 
-  Map<String, dynamic> toJson() =>
-      {"id": id, "url": url, "fileName": fileName, "mediaType": mediaType};
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "url": url,
+    "fileName": fileName,
+    "mediaType": mediaType,
+  };
 }

@@ -8,14 +8,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:provider/provider.dart';
-import 'package:wallet_cryptomask/constant.dart';
-import 'package:wallet_cryptomask/core/providers/browser_provider/browser_provider.dart';
-import 'package:wallet_cryptomask/core/model/wc_ethereum_transaction.dart';
-import 'package:wallet_cryptomask/core/providers/wallet_provider/wallet_provider.dart';
-import 'package:wallet_cryptomask/l10n/transalation.dart';
-import 'package:wallet_cryptomask/ui/screens/wallet-connect-screen/widgets/connect_sheet.dart';
-import 'package:wallet_cryptomask/ui/screens/wallet-connect-screen/widgets/transaction_sheet.dart';
-import 'package:wallet_cryptomask/ui/utils/ui_utils.dart';
+import 'package:felix_wallet_crypto/constant.dart';
+import 'package:felix_wallet_crypto/core/providers/browser_provider/browser_provider.dart';
+import 'package:felix_wallet_crypto/core/model/wc_ethereum_transaction.dart';
+import 'package:felix_wallet_crypto/core/providers/wallet_provider/wallet_provider.dart';
+import 'package:felix_wallet_crypto/l10n/transalation.dart';
+import 'package:felix_wallet_crypto/ui/screens/wallet-connect-screen/widgets/connect_sheet.dart';
+import 'package:felix_wallet_crypto/ui/screens/wallet-connect-screen/widgets/transaction_sheet.dart';
+import 'package:felix_wallet_crypto/ui/utils/ui_utils.dart';
 
 class BrowserView extends StatefulWidget {
   final BrowserProvider webViewModel;

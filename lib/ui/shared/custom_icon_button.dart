@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:wallet_cryptomask/constant.dart';
-import 'package:wallet_cryptomask/ui/shared/wallet_text.dart';
+import 'package:felix_wallet_crypto/constant.dart';
+import 'package:felix_wallet_crypto/ui/shared/wallet_text.dart';
 
 class CustomIconButton extends StatelessWidget {
   final Function() onPressed;
   final String localizeKey;
   final IconData iconData;
-  const CustomIconButton(
-      {super.key,
-      required this.onPressed,
-      required this.localizeKey,
-      required this.iconData});
+  const CustomIconButton({
+    super.key,
+    required this.onPressed,
+    required this.localizeKey,
+    required this.iconData,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,17 +25,10 @@ class CustomIconButton extends StatelessWidget {
           ),
           child: IconButton(
             onPressed: onPressed,
-            icon: Icon(
-              iconData,
-              size: 24,
-              color: Colors.white,
-            ),
+            icon: Icon(iconData, size: 24, color: Colors.white),
           ),
         ),
-        WalletText(
-          localizeKey: localizeKey,
-          textVarient: TextVarient.body3,
-        )
+        WalletText(localizeKey: localizeKey, textVarient: TextVarient.body3),
       ],
     );
   }

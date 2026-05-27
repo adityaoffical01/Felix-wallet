@@ -2,16 +2,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wallet_cryptomask/core/remote/response-model/settings_response.dart';
-import 'package:wallet_cryptomask/l10n/transalation.dart';
-import 'package:wallet_cryptomask/ui/screens/setttings-screen/general_settings_screen/general_settings_screen.dart';
-import 'package:wallet_cryptomask/ui/shared/wallet_text.dart';
-import 'package:wallet_cryptomask/ui/screens/chat_screen/chat_screen.dart';
-import 'package:wallet_cryptomask/ui/screens/wallet-connect-screen/walletconnect_session_screen.dart';
-import 'package:wallet_cryptomask/ui/screens/web-view-screen/web_view_screen.dart';
-import 'package:wallet_cryptomask/ui/utils/App_Colors.dart';
-import 'package:wallet_cryptomask/ui/utils/spaces.dart';
-import 'package:wallet_cryptomask/ui/utils/ui_utils.dart';
+import 'package:felix_wallet_crypto/core/remote/response-model/settings_response.dart';
+import 'package:felix_wallet_crypto/l10n/transalation.dart';
+import 'package:felix_wallet_crypto/ui/screens/setttings-screen/general_settings_screen/general_settings_screen.dart';
+import 'package:felix_wallet_crypto/ui/shared/wallet_text.dart';
+import 'package:felix_wallet_crypto/ui/screens/chat_screen/chat_screen.dart';
+import 'package:felix_wallet_crypto/ui/screens/wallet-connect-screen/walletconnect_session_screen.dart';
+import 'package:felix_wallet_crypto/ui/screens/web-view-screen/web_view_screen.dart';
+import 'package:felix_wallet_crypto/ui/utils/App_Colors.dart';
+import 'package:felix_wallet_crypto/ui/utils/spaces.dart';
+import 'package:felix_wallet_crypto/ui/utils/ui_utils.dart';
 
 class SettingsScreen extends StatefulWidget {
   static const route = "settings_screen";
@@ -111,9 +111,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               ListTile(
                 onTap: () {
-                  Navigator.of(context, rootNavigator: true).push(
-                    MaterialPageRoute(builder: (_) => const ChatScreen()),
-                  );
+                  Navigator.of(
+                    context,
+                    rootNavigator: true,
+                  ).push(MaterialPageRoute(builder: (_) => const ChatScreen()));
                 },
                 title: const WalletText(localizeKey: 'contactUs'),
                 subtitle: const WalletText(localizeKey: 'sendMessage'),

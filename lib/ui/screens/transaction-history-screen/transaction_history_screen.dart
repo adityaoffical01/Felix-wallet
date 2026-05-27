@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:wallet_cryptomask/constant.dart';
-import 'package:wallet_cryptomask/core/providers/token_provider/token_provider.dart';
-import 'package:wallet_cryptomask/core/providers/wallet_provider/wallet_provider.dart';
-import 'package:wallet_cryptomask/core/remote/response-model/moralis_transaction_response.dart';
-import 'package:wallet_cryptomask/ui/screens/block-web-view-screen/block_web_view.dart';
-import 'package:wallet_cryptomask/ui/shared/wallet_text.dart';
-import 'package:wallet_cryptomask/ui/screens/transaction-history-screen/widget/transaction_tile.dart';
-import 'package:wallet_cryptomask/ui/utils/App_Colors.dart';
-import 'package:wallet_cryptomask/ui/utils/spaces.dart';
-import 'package:wallet_cryptomask/ui/utils/ui_utils.dart';
+import 'package:felix_wallet_crypto/constant.dart';
+import 'package:felix_wallet_crypto/core/providers/token_provider/token_provider.dart';
+import 'package:felix_wallet_crypto/core/providers/wallet_provider/wallet_provider.dart';
+import 'package:felix_wallet_crypto/core/remote/response-model/moralis_transaction_response.dart';
+import 'package:felix_wallet_crypto/ui/screens/block-web-view-screen/block_web_view.dart';
+import 'package:felix_wallet_crypto/ui/shared/wallet_text.dart';
+import 'package:felix_wallet_crypto/ui/screens/transaction-history-screen/widget/transaction_tile.dart';
+import 'package:felix_wallet_crypto/ui/utils/App_Colors.dart';
+import 'package:felix_wallet_crypto/ui/utils/spaces.dart';
+import 'package:felix_wallet_crypto/ui/utils/ui_utils.dart';
 
 class TransactionHistoryScreen extends StatefulWidget {
   final bool? isBack;
@@ -131,17 +131,16 @@ class _TransactionHistoryScreenState extends State<TransactionHistoryScreen> {
                             padding: const EdgeInsets.all(8.0),
                             child: InkWell(
                               onTap: () {
-                                Navigator.of(
-                                  context,
-                                  rootNavigator: true,
-                                ).push(
+                                Navigator.of(context, rootNavigator: true).push(
                                   MaterialPageRoute(
                                     builder: (_) => BlockWebView(
                                       title: getWalletProvider(
                                         context,
                                       ).activeNetwork.networkName,
                                       url: viewAddressOnEtherScan(
-                                        getWalletProvider(context).activeNetwork,
+                                        getWalletProvider(
+                                          context,
+                                        ).activeNetwork,
                                         getWalletProvider(context)
                                             .activeWallet
                                             .wallet

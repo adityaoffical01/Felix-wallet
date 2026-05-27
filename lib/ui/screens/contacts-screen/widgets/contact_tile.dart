@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wallet_cryptomask/constant.dart';
-import 'package:wallet_cryptomask/core/providers/contact_provider/contact_provider.dart';
-import 'package:wallet_cryptomask/core/providers/token_provider/token_provider.dart';
-import 'package:wallet_cryptomask/core/providers/wallet_provider/wallet_provider.dart';
-import 'package:wallet_cryptomask/ui/screens/amount-screen/amount_screen.dart';
-import 'package:wallet_cryptomask/ui/screens/contacts-screen/widgets/add_contact.dart';
-import 'package:wallet_cryptomask/ui/shared/avatar_widget.dart';
-import 'package:wallet_cryptomask/ui/shared/wallet_button.dart';
-import 'package:wallet_cryptomask/ui/shared/wallet_text.dart';
-import 'package:wallet_cryptomask/ui/utils/spaces.dart';
+import 'package:felix_wallet_crypto/constant.dart';
+import 'package:felix_wallet_crypto/core/providers/contact_provider/contact_provider.dart';
+import 'package:felix_wallet_crypto/core/providers/token_provider/token_provider.dart';
+import 'package:felix_wallet_crypto/core/providers/wallet_provider/wallet_provider.dart';
+import 'package:felix_wallet_crypto/ui/screens/amount-screen/amount_screen.dart';
+import 'package:felix_wallet_crypto/ui/screens/contacts-screen/widgets/add_contact.dart';
+import 'package:felix_wallet_crypto/ui/shared/avatar_widget.dart';
+import 'package:felix_wallet_crypto/ui/shared/wallet_button.dart';
+import 'package:felix_wallet_crypto/ui/shared/wallet_text.dart';
+import 'package:felix_wallet_crypto/ui/utils/spaces.dart';
 
 class ContactTile extends StatefulWidget {
   final String name;
@@ -45,21 +45,13 @@ class _ContactTileState extends State<ContactTile> {
               widget.onChoose(widget.address);
             }
           : null,
-      leading: AvatarWidget(
-        radius: 30,
-        address: widget.address,
-      ),
+      leading: AvatarWidget(radius: 30, address: widget.address),
       title: Text(widget.name),
       textColor: Colors.black,
       iconColor: kPrimaryColor,
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            widget.address,
-            style: const TextStyle(fontSize: 12),
-          ),
-        ],
+        children: [Text(widget.address, style: const TextStyle(fontSize: 12))],
       ),
       trailing: Text(widget.network),
       children: [
@@ -82,29 +74,29 @@ class _ContactTileState extends State<ContactTile> {
                 );
               },
               style: ButtonStyle(
-                  splashFactory: NoSplash.splashFactory,
-                  foregroundColor: WidgetStateProperty.all(kPrimaryColor),
-                  backgroundColor: WidgetStateProperty.all(Colors.transparent)),
-              child: const WalletText(
-                localizeKey: 'send',
+                splashFactory: NoSplash.splashFactory,
+                foregroundColor: WidgetStateProperty.all(kPrimaryColor),
+                backgroundColor: WidgetStateProperty.all(Colors.transparent),
               ),
+              child: const WalletText(localizeKey: 'send'),
             ),
             TextButton(
               onPressed: () {
-                Get.bottomSheet(AddContact(
-                  mode: "UPDATE",
-                  address: widget.address,
-                  name: widget.name,
-                  id: widget.id,
-                ));
+                Get.bottomSheet(
+                  AddContact(
+                    mode: "UPDATE",
+                    address: widget.address,
+                    name: widget.name,
+                    id: widget.id,
+                  ),
+                );
               },
               style: ButtonStyle(
-                  splashFactory: NoSplash.splashFactory,
-                  foregroundColor: WidgetStateProperty.all(kPrimaryColor),
-                  backgroundColor: WidgetStateProperty.all(Colors.transparent)),
-              child: const WalletText(
-                localizeKey: 'update',
+                splashFactory: NoSplash.splashFactory,
+                foregroundColor: WidgetStateProperty.all(kPrimaryColor),
+                backgroundColor: WidgetStateProperty.all(Colors.transparent),
               ),
+              child: const WalletText(localizeKey: 'update'),
             ),
             TextButton(
               onPressed: () {
@@ -115,9 +107,7 @@ class _ContactTileState extends State<ContactTile> {
                     content: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const WalletText(
-                          localizeKey: "deleteWarning",
-                        ),
+                        const WalletText(localizeKey: "deleteWarning"),
                         addHeight(SpacingSize.m),
                         Row(
                           children: [
@@ -141,16 +131,20 @@ class _ContactTileState extends State<ContactTile> {
                                 localizeKey: 'delete',
                                 onPressed: () {
                                   getContactProvider(context).deleteContacts(
-                                      address: widget.address,
-                                      alreadyExist: () {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(const SnackBar(
+                                    address: widget.address,
+                                    alreadyExist: () {
+                                      ScaffoldMessenger.of(
+                                        context,
+                                      ).showSnackBar(
+                                        const SnackBar(
                                           content: WalletText(
                                             localizeKey: 'contactExist',
                                           ),
                                           backgroundColor: kPrimaryColor,
-                                        ));
-                                      });
+                                        ),
+                                      );
+                                    },
+                                  );
                                   Get.back();
                                 },
                                 type: WalletButtonType.filled,
@@ -164,15 +158,14 @@ class _ContactTileState extends State<ContactTile> {
                 );
               },
               style: ButtonStyle(
-                  splashFactory: NoSplash.splashFactory,
-                  foregroundColor: WidgetStateProperty.all(kPrimaryColor),
-                  backgroundColor: WidgetStateProperty.all(Colors.transparent)),
-              child: const WalletText(
-                localizeKey: 'delete',
+                splashFactory: NoSplash.splashFactory,
+                foregroundColor: WidgetStateProperty.all(kPrimaryColor),
+                backgroundColor: WidgetStateProperty.all(Colors.transparent),
               ),
+              child: const WalletText(localizeKey: 'delete'),
             ),
           ],
-        )
+        ),
       ],
     );
   }

@@ -2,14 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wallet_cryptomask/constant.dart';
-import 'package:wallet_cryptomask/core/providers/contact_provider/contact_provider.dart';
-import 'package:wallet_cryptomask/core/providers/wallet_provider/wallet_provider.dart';
-import 'package:wallet_cryptomask/l10n/transalation.dart';
-import 'package:wallet_cryptomask/ui/shared/wallet_button.dart';
-import 'package:wallet_cryptomask/ui/shared/wallet_text.dart';
-import 'package:wallet_cryptomask/ui/utils/App_Colors.dart';
-import 'package:wallet_cryptomask/ui/utils/spaces.dart';
+import 'package:felix_wallet_crypto/constant.dart';
+import 'package:felix_wallet_crypto/core/providers/contact_provider/contact_provider.dart';
+import 'package:felix_wallet_crypto/core/providers/wallet_provider/wallet_provider.dart';
+import 'package:felix_wallet_crypto/l10n/transalation.dart';
+import 'package:felix_wallet_crypto/ui/shared/wallet_button.dart';
+import 'package:felix_wallet_crypto/ui/shared/wallet_text.dart';
+import 'package:felix_wallet_crypto/ui/utils/App_Colors.dart';
+import 'package:felix_wallet_crypto/ui/utils/spaces.dart';
 import '../../../shared/wallet_text_field.dart';
 
 class AddContact extends StatefulWidget {

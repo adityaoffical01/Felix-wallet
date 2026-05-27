@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hive/hive.dart';
-import 'package:wallet_cryptomask/constant.dart';
-import 'package:wallet_cryptomask/core/providers/browser_provider/browser_provider.dart';
-import 'package:wallet_cryptomask/l10n/transalation.dart';
-import 'package:wallet_cryptomask/ui/utils/spaces.dart';
+import 'package:felix_wallet_crypto/constant.dart';
+import 'package:felix_wallet_crypto/core/providers/browser_provider/browser_provider.dart';
+import 'package:felix_wallet_crypto/l10n/transalation.dart';
+import 'package:felix_wallet_crypto/ui/utils/spaces.dart';
 
 class BrowserUrlField extends StatefulWidget {
   static const route = "browser_url_bar";
@@ -12,12 +12,13 @@ class BrowserUrlField extends StatefulWidget {
   final bool? certified;
   final BrowserProvider webViewModel;
   final String url;
-  const BrowserUrlField(
-      {super.key,
-      required this.webViewModel,
-      required this.certified,
-      required this.onUrlSubmit,
-      required this.url});
+  const BrowserUrlField({
+    super.key,
+    required this.webViewModel,
+    required this.certified,
+    required this.onUrlSubmit,
+    required this.url,
+  });
 
   @override
   State<BrowserUrlField> createState() => _BrowserUrlFieldState();
@@ -33,9 +34,7 @@ class _BrowserUrlFieldState extends State<BrowserUrlField>
   bool showUrl = false;
   OutlineInputBorder outlineBorder = const OutlineInputBorder(
     borderSide: BorderSide(color: Colors.transparent, width: 0.0),
-    borderRadius: BorderRadius.all(
-      Radius.circular(50.0),
-    ),
+    borderRadius: BorderRadius.all(Radius.circular(50.0)),
   );
 
   @override
@@ -87,18 +86,23 @@ class _BrowserUrlFieldState extends State<BrowserUrlField>
                   autocorrect: false,
                   decoration: InputDecoration(
                     prefixIcon: IconButton(
-                        splashRadius: 30,
-                        onPressed: () async {
-                          Box box = await Hive.openBox("user_preference");
-                          box.put("connected-sites", []);
-                        },
-                        icon: const Icon(
-                          FontAwesomeIcons.google,
-                          size: 20,
-                          color: kPrimaryColor,
-                        )),
+                      splashRadius: 30,
+                      onPressed: () async {
+                        Box box = await Hive.openBox("user_preference");
+                        box.put("connected-sites", []);
+                      },
+                      icon: const Icon(
+                        FontAwesomeIcons.google,
+                        size: 20,
+                        color: kPrimaryColor,
+                      ),
+                    ),
                     contentPadding: const EdgeInsets.only(
-                        left: 0, top: 10.0, right: 10.0, bottom: 10.0),
+                      left: 0,
+                      top: 10.0,
+                      right: 10.0,
+                      bottom: 10.0,
+                    ),
                     filled: true,
                     fillColor: Colors.white,
                     border: outlineBorder,
@@ -113,18 +117,21 @@ class _BrowserUrlFieldState extends State<BrowserUrlField>
                             icon: Icon(
                               Icons.cancel,
                               color: Colors.black.withAlpha(50),
-                            ))
+                            ),
+                          )
                         : const SizedBox(),
                     focusedBorder: outlineBorder,
                     enabledBorder: outlineBorder,
                     hintText: getText(context, key: 'searchOrType'),
-                    hintStyle:
-                        const TextStyle(color: Colors.black54, fontSize: 12.0),
+                    hintStyle: const TextStyle(
+                      color: Colors.black54,
+                      fontSize: 12.0,
+                    ),
                   ),
                   style: const TextStyle(color: Colors.black, fontSize: 12.0),
                 ),
               ),
-              addWidth(SpacingSize.m)
+              addWidth(SpacingSize.m),
             ],
           ),
         ],

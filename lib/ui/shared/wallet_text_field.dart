@@ -1,10 +1,10 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
-import 'package:wallet_cryptomask/constant.dart';
-import 'package:wallet_cryptomask/ui/shared/wallet_text.dart';
-import 'package:wallet_cryptomask/ui/utils/App_Colors.dart';
-import 'package:wallet_cryptomask/ui/utils/spaces.dart';
+import 'package:felix_wallet_crypto/constant.dart';
+import 'package:felix_wallet_crypto/ui/shared/wallet_text.dart';
+import 'package:felix_wallet_crypto/ui/utils/App_Colors.dart';
+import 'package:felix_wallet_crypto/ui/utils/spaces.dart';
 
 enum TextFieldType { input, password }
 

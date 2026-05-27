@@ -1,10 +1,10 @@
 {
   "roots": [
-    "wallet_cryptomask"
+    "felix_wallet_crypto"
   ],
   "packages": [
     {
-      "name": "wallet_cryptomask",
+      "name": "felix_wallet_crypto",
       "version": "1.5.1+2",
       "dependencies": [
         "bip39",

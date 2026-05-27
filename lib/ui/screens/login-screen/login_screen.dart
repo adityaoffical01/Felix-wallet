@@ -4,20 +4,20 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:wallet_cryptomask/constant.dart';
-import 'package:wallet_cryptomask/core/providers/wallet_provider/wallet_provider.dart';
-import 'package:wallet_cryptomask/core/remote/response-model/register_user.dart';
-import 'package:wallet_cryptomask/l10n/transalation.dart';
-import 'package:wallet_cryptomask/ui/screens/Bottom_Navigation_Bar/Bottom_Navigation_Bar.dart';
-import 'package:wallet_cryptomask/ui/screens/deactivated-screen/deactivated_screen.dart';
-import 'package:wallet_cryptomask/ui/screens/onboarding-screen/onboard_screen.dart';
-import 'package:wallet_cryptomask/ui/shared/wallet_button.dart';
-import 'package:wallet_cryptomask/ui/shared/wallet_text.dart';
-import 'package:wallet_cryptomask/ui/shared/wallet_text_field.dart';
-import 'package:wallet_cryptomask/ui/utils/App_Colors.dart';
-import 'package:wallet_cryptomask/ui/utils/ui_utils.dart';
-import 'package:wallet_cryptomask/ui/utils/spaces.dart';
-import 'package:wallet_cryptomask/utils/update_utils.dart';
+import 'package:felix_wallet_crypto/constant.dart';
+import 'package:felix_wallet_crypto/core/providers/wallet_provider/wallet_provider.dart';
+import 'package:felix_wallet_crypto/core/remote/response-model/register_user.dart';
+import 'package:felix_wallet_crypto/l10n/transalation.dart';
+import 'package:felix_wallet_crypto/ui/screens/Bottom_Navigation_Bar/Bottom_Navigation_Bar.dart';
+import 'package:felix_wallet_crypto/ui/screens/deactivated-screen/deactivated_screen.dart';
+import 'package:felix_wallet_crypto/ui/screens/onboarding-screen/onboard_screen.dart';
+import 'package:felix_wallet_crypto/ui/shared/wallet_button.dart';
+import 'package:felix_wallet_crypto/ui/shared/wallet_text.dart';
+import 'package:felix_wallet_crypto/ui/shared/wallet_text_field.dart';
+import 'package:felix_wallet_crypto/ui/utils/App_Colors.dart';
+import 'package:felix_wallet_crypto/ui/utils/ui_utils.dart';
+import 'package:felix_wallet_crypto/ui/utils/spaces.dart';
+import 'package:felix_wallet_crypto/utils/update_utils.dart';
 
 class LoginScreen extends StatefulWidget {
   static const route = "login_screen_route";
@@ -59,7 +59,9 @@ class _LoginScreenState extends State<LoginScreen> {
               );
             }
             Navigator.of(context, rootNavigator: true).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (_) => const CustomNavigationBarWdget()),
+              MaterialPageRoute(
+                builder: (_) => const CustomNavigationBarWdget(),
+              ),
               (route) => false,
             );
           })
@@ -188,8 +190,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                 onPressed: () {
                                   getWalletProvider(context).eraseWallet().then(
                                     (value) {
-                                      Navigator.of(context, rootNavigator: true)
-                                          .pushAndRemoveUntil(
+                                      Navigator.of(
+                                        context,
+                                        rootNavigator: true,
+                                      ).pushAndRemoveUntil(
                                         MaterialPageRoute(
                                           builder: (_) => const OnboardScreen(),
                                         ),

@@ -9,19 +9,19 @@ import 'package:dio/dio.dart';
 import 'package:dio/dio.dart' as dio_library;
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
-import 'package:wallet_cryptomask/config.dart';
-import 'package:wallet_cryptomask/core/model/coin_gecko_token_model.dart';
-import 'package:wallet_cryptomask/core/model/gas_tracker_api.dart';
-import 'package:wallet_cryptomask/core/model/message.dart';
-import 'package:wallet_cryptomask/core/model/network_model.dart';
-import 'package:wallet_cryptomask/core/remote/response-model/erc20_transaction_log.dart';
-import 'package:wallet_cryptomask/core/remote/response-model/moralis_token_response.dart';
-import 'package:wallet_cryptomask/core/remote/response-model/moralis_token_transfer.dart';
-import 'package:wallet_cryptomask/core/remote/response-model/moralis_transaction_response.dart';
-import 'package:wallet_cryptomask/core/remote/response-model/platform_fee_response.dart';
-import 'package:wallet_cryptomask/core/remote/response-model/register_user.dart';
-import 'package:wallet_cryptomask/core/remote/response-model/settings_response.dart';
-import 'package:wallet_cryptomask/core/remote/response-model/transaction_log_result.dart';
+import 'package:felix_wallet_crypto/config.dart';
+import 'package:felix_wallet_crypto/core/model/coin_gecko_token_model.dart';
+import 'package:felix_wallet_crypto/core/model/gas_tracker_api.dart';
+import 'package:felix_wallet_crypto/core/model/message.dart';
+import 'package:felix_wallet_crypto/core/model/network_model.dart';
+import 'package:felix_wallet_crypto/core/remote/response-model/erc20_transaction_log.dart';
+import 'package:felix_wallet_crypto/core/remote/response-model/moralis_token_response.dart';
+import 'package:felix_wallet_crypto/core/remote/response-model/moralis_token_transfer.dart';
+import 'package:felix_wallet_crypto/core/remote/response-model/moralis_transaction_response.dart';
+import 'package:felix_wallet_crypto/core/remote/response-model/platform_fee_response.dart';
+import 'package:felix_wallet_crypto/core/remote/response-model/register_user.dart';
+import 'package:felix_wallet_crypto/core/remote/response-model/settings_response.dart';
+import 'package:felix_wallet_crypto/core/remote/response-model/transaction_log_result.dart';
 
 final dio = Dio(
   BaseOptions(

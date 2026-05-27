@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
-import 'package:wallet_cryptomask/core/model/contact_model.dart';
+import 'package:felix_wallet_crypto/core/model/contact_model.dart';
 
 ContactProvider getContactProvider(BuildContext context) =>
     context.read<ContactProvider>();
@@ -35,19 +35,21 @@ class ContactProvider extends ChangeNotifier {
 
   getContactName({required String address}) {
     try {
-      Contact foundContact =
-          contacts.firstWhere((element) => element.address == address);
+      Contact foundContact = contacts.firstWhere(
+        (element) => element.address == address,
+      );
       return foundContact.name;
     } catch (e) {
       return "Unknown address";
     }
   }
 
-  addContacts(
-      {required String name,
-      required String address,
-      required String network,
-      required Function alreadyExist}) {
+  addContacts({
+    required String name,
+    required String address,
+    required String network,
+    required Function alreadyExist,
+  }) {
     var contacts = box.get("contacts", defaultValue: <Contact>[]);
     try {
       Contact _ = contacts.firstWhere((element) {
@@ -56,8 +58,14 @@ class ContactProvider extends ChangeNotifier {
       alreadyExist();
     } catch (e) {
       Uuid uuid = const Uuid();
-      contacts.add(Contact(
-          name: name, address: address, networkId: network, id: uuid.v1()));
+      contacts.add(
+        Contact(
+          name: name,
+          address: address,
+          networkId: network,
+          id: uuid.v1(),
+        ),
+      );
       box.put("contacts", contacts);
       this.contacts = contacts.cast<Contact>();
       filtered = this.contacts;
@@ -79,18 +87,27 @@ class ContactProvider extends ChangeNotifier {
     } catch (e) {}
   }
 
-  updateContact(
-      {required String id, required String address, required String name}) {
+  updateContact({
+    required String id,
+    required String address,
+    required String name,
+  }) {
     var contacts = box.get("contacts", defaultValue: <Contact>[]);
     try {
-      List<Contact> updatedContacts =
-          (contacts as List<dynamic>).cast<Contact>().map((e) {
-        if (e.id == id) {
-          return Contact(
-              id: id, address: address, name: name, networkId: e.networkId);
-        }
-        return e;
-      }).toList();
+      List<Contact> updatedContacts = (contacts as List<dynamic>)
+          .cast<Contact>()
+          .map((e) {
+            if (e.id == id) {
+              return Contact(
+                id: id,
+                address: address,
+                name: name,
+                networkId: e.networkId,
+              );
+            }
+            return e;
+          })
+          .toList();
       box.put("contacts", updatedContacts);
       this.contacts = updatedContacts.cast<Contact>();
       filtered = this.contacts;

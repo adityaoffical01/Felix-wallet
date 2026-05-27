@@ -10,11 +10,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:provider/provider.dart';
-import 'package:wallet_cryptomask/core/providers/browser_provider/browser_provider.dart';
-import 'package:wallet_cryptomask/ui/tabs/browser/widgets/browser_app_bar.dart';
-import 'package:wallet_cryptomask/ui/tabs/browser/widgets/browser_tab_view.dart';
-import 'package:wallet_cryptomask/ui/tabs/browser/widgets/browser_view.dart';
-import 'package:wallet_cryptomask/ui/utils/ui_utils.dart';
+import 'package:felix_wallet_crypto/core/providers/browser_provider/browser_provider.dart';
+import 'package:felix_wallet_crypto/ui/tabs/browser/widgets/browser_app_bar.dart';
+import 'package:felix_wallet_crypto/ui/tabs/browser/widgets/browser_tab_view.dart';
+import 'package:felix_wallet_crypto/ui/tabs/browser/widgets/browser_view.dart';
+import 'package:felix_wallet_crypto/ui/utils/ui_utils.dart';
 import 'package:webview_flutter/webview_flutter.dart' as native;
 
 class BrowserTab extends StatefulWidget {

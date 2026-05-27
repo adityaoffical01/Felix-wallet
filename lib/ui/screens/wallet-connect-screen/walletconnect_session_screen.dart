@@ -5,11 +5,11 @@ import 'dart:developer';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wallet_cryptomask/core/providers/wallet_provider/wallet_provider.dart';
-import 'package:wallet_cryptomask/l10n/transalation.dart';
-import 'package:wallet_cryptomask/ui/shared/wallet_button.dart';
-import 'package:wallet_cryptomask/ui/shared/wallet_text.dart';
-import 'package:wallet_cryptomask/ui/utils/spaces.dart';
+import 'package:felix_wallet_crypto/core/providers/wallet_provider/wallet_provider.dart';
+import 'package:felix_wallet_crypto/l10n/transalation.dart';
+import 'package:felix_wallet_crypto/ui/shared/wallet_button.dart';
+import 'package:felix_wallet_crypto/ui/shared/wallet_text.dart';
+import 'package:felix_wallet_crypto/ui/utils/spaces.dart';
 import 'package:walletconnect_flutter_v2/walletconnect_flutter_v2.dart';
 
 class WalletConnectSessionScreen extends StatefulWidget {
@@ -54,9 +54,7 @@ class _WalletConnectSessionScreenState
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: const Icon(
-            Icons.arrow_back_ios,
-          ),
+          icon: const Icon(Icons.arrow_back_ios),
         ),
         actions: [
           IconButton(
@@ -69,9 +67,7 @@ class _WalletConnectSessionScreenState
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const WalletText(
-                          localizeKey: 'wcEndDialog',
-                        ),
+                        const WalletText(localizeKey: 'wcEndDialog'),
                         addHeight(SpacingSize.m),
                         Row(
                           children: [
@@ -90,20 +86,18 @@ class _WalletConnectSessionScreenState
                                 onPressed: () async {
                                   try {
                                     for (var session in sessions) {
-                                      await getWalletProvider(context)
-                                          .web3Wallet
-                                          ?.disconnectSession(
-                                            topic: session.topic,
-                                            reason: Errors.getSdkError(
-                                              Errors.USER_DISCONNECTED,
-                                            ),
-                                          );
+                                      await getWalletProvider(
+                                        context,
+                                      ).web3Wallet?.disconnectSession(
+                                        topic: session.topic,
+                                        reason: Errors.getSdkError(
+                                          Errors.USER_DISCONNECTED,
+                                        ),
+                                      );
                                       await getWalletProvider(context)
                                           .web3Wallet
                                           ?.sessions
-                                          .delete(
-                                            session.topic,
-                                          );
+                                          .delete(session.topic);
                                     }
                                   } catch (e) {
                                     log(e.toString());
@@ -138,92 +132,95 @@ class _WalletConnectSessionScreenState
                     children: [
                       ListTile(
                         trailing: IconButton(
-                            onPressed: () {
-                              final alert = StatefulBuilder(
-                                builder: (context, innerSetState) =>
-                                    AlertDialog(
-                                  backgroundColor: Colors.white,
-                                  content: SizedBox(
-                                    width: context.width,
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        WalletText(
-                                          localizeKey: getTextWithPlaceholder(
-                                              context,
-                                              key: 'endOne',
-                                              string: sessions[index]
-                                                  .peer
-                                                  .metadata
-                                                  .name),
+                          onPressed: () {
+                            final alert = StatefulBuilder(
+                              builder: (context, innerSetState) => AlertDialog(
+                                backgroundColor: Colors.white,
+                                content: SizedBox(
+                                  width: context.width,
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      WalletText(
+                                        localizeKey: getTextWithPlaceholder(
+                                          context,
+                                          key: 'endOne',
+                                          string: sessions[index]
+                                              .peer
+                                              .metadata
+                                              .name,
                                         ),
-                                        addHeight(SpacingSize.m),
-                                        Row(
-                                          children: [
-                                            Expanded(
-                                              child: WalletButton(
-                                                textSize: 14.0,
-                                                localizeKey: 'cancel',
-                                                onPressed: () => Get.back(),
-                                                type: WalletButtonType.outline,
-                                              ),
+                                      ),
+                                      addHeight(SpacingSize.m),
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: WalletButton(
+                                              textSize: 14.0,
+                                              localizeKey: 'cancel',
+                                              onPressed: () => Get.back(),
+                                              type: WalletButtonType.outline,
                                             ),
-                                            Expanded(
-                                              child: WalletButton(
-                                                textSize: 14.0,
-                                                localizeKey: 'end',
-                                                onPressed: () async {
-                                                  try {
-                                                    getWalletProvider(context)
-                                                        .web3Wallet!
-                                                        .disconnectSession(
-                                                          topic: sessions[index]
-                                                              .topic,
-                                                          reason: Errors
-                                                              .getSdkError(
-                                                            Errors
-                                                                .USER_DISCONNECTED,
-                                                          ),
-                                                        )
-                                                        .then((value) {
-                                                      getWalletProvider(context)
-                                                          .web3Wallet!
-                                                          .sessions
-                                                          .delete(
+                                          ),
+                                          Expanded(
+                                            child: WalletButton(
+                                              textSize: 14.0,
+                                              localizeKey: 'end',
+                                              onPressed: () async {
+                                                try {
+                                                  getWalletProvider(context)
+                                                      .web3Wallet!
+                                                      .disconnectSession(
+                                                        topic: sessions[index]
+                                                            .topic,
+                                                        reason: Errors.getSdkError(
+                                                          Errors
+                                                              .USER_DISCONNECTED,
+                                                        ),
+                                                      )
+                                                      .then((value) {
+                                                        getWalletProvider(
+                                                              context,
+                                                            )
+                                                            .web3Wallet!
+                                                            .sessions
+                                                            .delete(
                                                               sessions[index]
-                                                                  .topic);
-                                                      setState(() {
-                                                        sessions.remove(
-                                                            sessions[index]);
+                                                                  .topic,
+                                                            );
+                                                        setState(() {
+                                                          sessions.remove(
+                                                            sessions[index],
+                                                          );
+                                                        });
                                                       });
-                                                    });
-                                                  } catch (e) {
-                                                    log(e.toString());
-                                                  }
-                                                  setState(() {
-                                                    sessions.remove(
-                                                        sessions[index]);
-                                                  });
-                                                  Get.back();
-                                                },
-                                                type: WalletButtonType.filled,
-                                              ),
+                                                } catch (e) {
+                                                  log(e.toString());
+                                                }
+                                                setState(() {
+                                                  sessions.remove(
+                                                    sessions[index],
+                                                  );
+                                                });
+                                                Get.back();
+                                              },
+                                              type: WalletButtonType.filled,
                                             ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              );
-                              showDialog(
-                                  context: context,
-                                  builder: (context) => alert);
-                            },
-                            icon: const Icon(
-                              Icons.close,
-                              color: Colors.red,
-                            )),
+                              ),
+                            );
+                            showDialog(
+                              context: context,
+                              builder: (context) => alert,
+                            );
+                          },
+                          icon: const Icon(Icons.close, color: Colors.red),
+                        ),
                         leading: sessions[index].peer.metadata.icons.isNotEmpty
                             ? CachedNetworkImage(
                                 width: 30,
@@ -242,15 +239,13 @@ class _WalletConnectSessionScreenState
                           style: const TextStyle(fontSize: 12),
                         ),
                       ),
-                      const Divider()
+                      const Divider(),
                     ],
                   );
                 },
               )
             : Center(
-                child: WalletText(
-                  localizeKey: getText(context, key: 'noWC'),
-                ),
+                child: WalletText(localizeKey: getText(context, key: 'noWC')),
               ),
       ),
     );

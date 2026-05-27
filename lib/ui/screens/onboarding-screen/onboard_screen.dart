@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:routerino/routerino.dart';
-import 'package:wallet_cryptomask/constant.dart';
-import 'package:wallet_cryptomask/ui/screens/onboarding-screen/wallet-setup-screen/wallet_setup_screen.dart';
-import 'package:wallet_cryptomask/ui/shared/wallet_button.dart';
-import 'package:wallet_cryptomask/ui/shared/wallet_text.dart';
-import 'package:wallet_cryptomask/ui/utils/spaces.dart';
-import 'package:wallet_cryptomask/utils/update_utils.dart';
+import 'package:felix_wallet_crypto/constant.dart';
+import 'package:felix_wallet_crypto/ui/screens/onboarding-screen/wallet-setup-screen/wallet_setup_screen.dart';
+import 'package:felix_wallet_crypto/ui/shared/wallet_button.dart';
+import 'package:felix_wallet_crypto/ui/shared/wallet_text.dart';
+import 'package:felix_wallet_crypto/ui/utils/spaces.dart';
+import 'package:felix_wallet_crypto/utils/update_utils.dart';
 
 class OnboardScreen extends StatefulWidget {
   static String route = "onboard_screen";

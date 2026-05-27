@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wallet_cryptomask/constant.dart';
-import 'package:wallet_cryptomask/core/providers/locale_provider/locale_provider.dart';
-import 'package:wallet_cryptomask/ui/shared/wallet_text.dart';
-import 'package:wallet_cryptomask/ui/utils/spaces.dart';
+import 'package:felix_wallet_crypto/constant.dart';
+import 'package:felix_wallet_crypto/core/providers/locale_provider/locale_provider.dart';
+import 'package:felix_wallet_crypto/ui/shared/wallet_text.dart';
+import 'package:felix_wallet_crypto/ui/utils/spaces.dart';
 
 class GeneralSettingsScreen extends StatefulWidget {
   static String route = "general_setting_screen";
@@ -50,35 +50,38 @@ class _GeneralSettingsScreenState extends State<GeneralSettingsScreen> {
           children: [
             addHeight(SpacingSize.m),
             const WalletText(
-                localizeKey: 'currentLanguage',
-                size: 16,
-                fontWeight: FontWeight.bold),
-            addHeight(SpacingSize.xs),
-            const WalletText(
-              localizeKey: 'languageDescription',
+              localizeKey: 'currentLanguage',
+              size: 16,
+              fontWeight: FontWeight.bold,
             ),
             addHeight(SpacingSize.xs),
+            const WalletText(localizeKey: 'languageDescription'),
+            addHeight(SpacingSize.xs),
             DropdownButtonHideUnderline(
-                child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              decoration: BoxDecoration(
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
-                  border: Border.all(width: 1, color: kPrimaryColor)),
-              child: DropdownButton<String>(
+                  border: Border.all(width: 1, color: kPrimaryColor),
+                ),
+                child: DropdownButton<String>(
                   isExpanded: true,
                   value: getLiveLocalProvider(context).locale,
                   items: LocaleProvider.supportedLocales
                       .map<DropdownMenuItem<String>>(
-                          (e) => DropdownMenuItem<String>(
-                                value: e.languageCode,
-                                child: Text(e.languageCode.toUpperCase()),
-                              ))
+                        (e) => DropdownMenuItem<String>(
+                          value: e.languageCode,
+                          child: Text(e.languageCode.toUpperCase()),
+                        ),
+                      )
                       .toList(),
                   onChanged: (value) {
                     Get.updateLocale(Locale(value ?? "en"));
                     getLocalProvider(context).changeLocale(value ?? "en");
-                  }),
-            ))
+                  },
+                ),
+              ),
+            ),
           ],
         ),
       ),

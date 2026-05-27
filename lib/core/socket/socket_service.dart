@@ -3,9 +3,9 @@
 import 'dart:async';
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
-import 'package:wallet_cryptomask/config.dart';
-import 'package:wallet_cryptomask/core/model/message.dart';
-import 'package:wallet_cryptomask/ui/utils/ui_utils.dart';
+import 'package:felix_wallet_crypto/config.dart';
+import 'package:felix_wallet_crypto/core/model/message.dart';
+import 'package:felix_wallet_crypto/ui/utils/ui_utils.dart';
 
 class SocketEvent {
   static String update_user = "update_user";
@@ -22,12 +22,13 @@ class SocketService {
 
   void connect() {
     _socket = io.io(
-        baseUrl,
-        io.OptionBuilder()
-            .setExtraHeaders({'authorization': token})
-            .setTransports(['websocket']) // for Flutter or Dart VM
-            .disableAutoConnect() // disable auto-connection
-            .build());
+      baseUrl,
+      io.OptionBuilder()
+          .setExtraHeaders({'authorization': token})
+          .setTransports(['websocket']) // for Flutter or Dart VM
+          .disableAutoConnect() // disable auto-connection
+          .build(),
+    );
 
     if (!_socket!.connected) {
       _socket?.connect();
@@ -59,15 +60,16 @@ class SocketService {
                       url: message.attachment!.url,
                       fileName: message.attachment!.fileName,
                       type: MediaType.parse(message.attachment!.mediaType),
-                    )
+                    ),
                   ]
                 : null,
             status: MessageStatus.received,
             user: ChatUser(
-                firstName: message.isAdminMessage
-                    ? "Admin"
-                    : showEllipse(message.user.address),
-                id: message.isAdminMessage ? "admin" : message.user.address),
+              firstName: message.isAdminMessage
+                  ? "Admin"
+                  : showEllipse(message.user.address),
+              id: message.isAdminMessage ? "admin" : message.user.address,
+            ),
             createdAt: message.timestamp,
           ),
         );

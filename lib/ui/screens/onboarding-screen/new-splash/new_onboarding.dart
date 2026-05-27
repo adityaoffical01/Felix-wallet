@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:routerino/routerino.dart';
-import 'package:wallet_cryptomask/constant.dart';
-import 'package:wallet_cryptomask/l10n/transalation.dart';
-import 'package:wallet_cryptomask/ui/screens/onboarding-screen/wallet-setup-screen/wallet_setup_screen.dart';
-import 'package:wallet_cryptomask/ui/utils/App_Colors.dart';
+import 'package:felix_wallet_crypto/constant.dart';
+import 'package:felix_wallet_crypto/l10n/transalation.dart';
+import 'package:felix_wallet_crypto/ui/screens/onboarding-screen/wallet-setup-screen/wallet_setup_screen.dart';
+import 'package:felix_wallet_crypto/ui/utils/App_Colors.dart';
 
 class OnboardingScreenWidget extends StatefulWidget {
   const OnboardingScreenWidget({Key? key}) : super(key: key);

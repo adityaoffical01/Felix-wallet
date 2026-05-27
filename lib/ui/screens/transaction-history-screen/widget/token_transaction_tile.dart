@@ -3,23 +3,23 @@ import 'dart:math';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:wallet_cryptomask/constant.dart';
-import 'package:wallet_cryptomask/core/providers/wallet_provider/wallet_provider.dart';
-import 'package:wallet_cryptomask/core/model/token_model.dart';
-import 'package:wallet_cryptomask/core/remote/response-model/moralis_token_transfer.dart';
-import 'package:wallet_cryptomask/l10n/transalation.dart';
-import 'package:wallet_cryptomask/ui/screens/block-web-view-screen/block_web_view.dart';
-import 'package:wallet_cryptomask/ui/shared/avatar_widget.dart';
-import 'package:wallet_cryptomask/ui/shared/wallet_button.dart';
-import 'package:wallet_cryptomask/ui/shared/wallet_text.dart';
-import 'package:wallet_cryptomask/ui/utils/ui_utils.dart';
-import 'package:wallet_cryptomask/ui/utils/spaces.dart';
+import 'package:felix_wallet_crypto/constant.dart';
+import 'package:felix_wallet_crypto/core/providers/wallet_provider/wallet_provider.dart';
+import 'package:felix_wallet_crypto/core/model/token_model.dart';
+import 'package:felix_wallet_crypto/core/remote/response-model/moralis_token_transfer.dart';
+import 'package:felix_wallet_crypto/l10n/transalation.dart';
+import 'package:felix_wallet_crypto/ui/screens/block-web-view-screen/block_web_view.dart';
+import 'package:felix_wallet_crypto/ui/shared/avatar_widget.dart';
+import 'package:felix_wallet_crypto/ui/shared/wallet_button.dart';
+import 'package:felix_wallet_crypto/ui/shared/wallet_text.dart';
+import 'package:felix_wallet_crypto/ui/utils/ui_utils.dart';
+import 'package:felix_wallet_crypto/ui/utils/spaces.dart';
 
 class TokenTransactionTile extends StatefulWidget {
   final DateTime date;
   final TokenTransfer data;
   const TokenTransactionTile({Key? key, required this.date, required this.data})
-      : super(key: key);
+    : super(key: key);
 
   @override
   State<TokenTransactionTile> createState() => _TokenTransactionTileState();
@@ -44,7 +44,8 @@ class _TokenTransactionTileState extends State<TokenTransactionTile> {
               children: [
                 addHeight(SpacingSize.xl),
                 Expanded(
-                  child: widget.data.fromAddress.toLowerCase() ==
+                  child:
+                      widget.data.fromAddress.toLowerCase() ==
                           getWalletProvider(context)
                               .activeWallet
                               .wallet
@@ -64,137 +65,146 @@ class _TokenTransactionTileState extends State<TokenTransactionTile> {
                         ),
                 ),
                 InkWell(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: const Icon(Icons.close))
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Icon(Icons.close),
+                ),
               ],
             ),
-            titlePadding:
-                const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+            titlePadding: const EdgeInsets.symmetric(
+              horizontal: 10,
+              vertical: 7,
+            ),
             contentPadding: const EdgeInsets.all(0),
             content: SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: SizedBox(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+              width: MediaQuery.of(context).size.width,
+              child: SizedBox(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      addHeight(SpacingSize.m),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          addHeight(SpacingSize.m),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          const Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                              WalletText(localizeKey: 'status', size: 12),
+                              WalletText(
+                                localizeKey: 'confirmed',
+                                color: Colors.green,
+                                size: 12,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  WalletText(localizeKey: 'status', size: 12),
-                                  WalletText(
-                                    localizeKey: 'confirmed',
-                                    color: Colors.green,
+                                  const WalletText(
+                                    localizeKey: 'copyTxId',
                                     size: 12,
-                                    fontWeight: FontWeight.w700,
-                                  )
-                                ],
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      const WalletText(
-                                          localizeKey: 'copyTxId', size: 12),
-                                      IconButton(
-                                          splashRadius: 15,
-                                          onPressed: () {
-                                            copyAddressToClipBoard(
-                                                widget.data.transactionHash,
-                                                context);
-                                          },
-                                          icon: const Icon(
-                                            Icons.copy,
-                                            size: 14,
-                                          ))
-                                    ],
-                                  )
-                                ],
-                              )
-                            ],
-                          ),
-                          addHeight(SpacingSize.s),
-                          addHeight(SpacingSize.xs),
-                          const Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              WalletText(localizeKey: 'from', size: 12),
-                              WalletText(localizeKey: 'to', size: 12)
-                            ],
-                          ),
-                          addHeight(SpacingSize.xs),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  AvatarWidget(
-                                      radius: 30,
-                                      address: widget.data.fromAddress),
-                                  addWidth(SpacingSize.s),
-                                  Text(showEllipse(widget.data.fromAddress),
-                                      style: const TextStyle(fontSize: 12)),
-                                ],
-                              ),
-                              Container(
-                                  decoration: BoxDecoration(
-                                      border: Border.all(
-                                          width: 1, color: Colors.grey),
-                                      borderRadius: BorderRadius.circular(20)),
-                                  child: const Icon(
-                                    Icons.arrow_forward,
-                                    color: Colors.grey,
-                                  )),
-                              Row(
-                                children: [
-                                  AvatarWidget(
-                                      radius: 30,
-                                      address: widget.data.toAddress),
-                                  addWidth(SpacingSize.s),
-                                  Text(showEllipse(widget.data.toAddress),
-                                      style: const TextStyle(fontSize: 12)),
-                                ],
-                              )
-                            ],
-                          ),
-                          addHeight(SpacingSize.s),
-                          addHeight(SpacingSize.xs),
-                          WalletButton(
-                              textSize: 12,
-                              localizeKey: 'viewOnExplorer',
-                              onPressed: () {
-                                Navigator.of(
-                                  context,
-                                  rootNavigator: true,
-                                ).push(
-                                  MaterialPageRoute(
-                                    builder: (_) => BlockWebView(
-                                      url: getWalletProvider(context)
-                                              .activeNetwork
-                                              .transactionViewUrl +
-                                          widget.data.transactionHash,
-                                      title: getText(
-                                        context,
-                                        key: 'transaction',
-                                      ),
-                                    ),
                                   ),
-                                );
-                              }),
-                          addHeight(SpacingSize.m),
-                        ]),
+                                  IconButton(
+                                    splashRadius: 15,
+                                    onPressed: () {
+                                      copyAddressToClipBoard(
+                                        widget.data.transactionHash,
+                                        context,
+                                      );
+                                    },
+                                    icon: const Icon(Icons.copy, size: 14),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      addHeight(SpacingSize.s),
+                      addHeight(SpacingSize.xs),
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          WalletText(localizeKey: 'from', size: 12),
+                          WalletText(localizeKey: 'to', size: 12),
+                        ],
+                      ),
+                      addHeight(SpacingSize.xs),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              AvatarWidget(
+                                radius: 30,
+                                address: widget.data.fromAddress,
+                              ),
+                              addWidth(SpacingSize.s),
+                              Text(
+                                showEllipse(widget.data.fromAddress),
+                                style: const TextStyle(fontSize: 12),
+                              ),
+                            ],
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(width: 1, color: Colors.grey),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: const Icon(
+                              Icons.arrow_forward,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              AvatarWidget(
+                                radius: 30,
+                                address: widget.data.toAddress,
+                              ),
+                              addWidth(SpacingSize.s),
+                              Text(
+                                showEllipse(widget.data.toAddress),
+                                style: const TextStyle(fontSize: 12),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      addHeight(SpacingSize.s),
+                      addHeight(SpacingSize.xs),
+                      WalletButton(
+                        textSize: 12,
+                        localizeKey: 'viewOnExplorer',
+                        onPressed: () {
+                          Navigator.of(context, rootNavigator: true).push(
+                            MaterialPageRoute(
+                              builder: (_) => BlockWebView(
+                                url:
+                                    getWalletProvider(
+                                      context,
+                                    ).activeNetwork.transactionViewUrl +
+                                    widget.data.transactionHash,
+                                title: getText(context, key: 'transaction'),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                      addHeight(SpacingSize.m),
+                    ],
                   ),
-                )),
+                ),
+              ),
+            ),
           ),
         );
       },
@@ -205,7 +215,8 @@ class _TokenTransactionTileState extends State<TokenTransactionTile> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-                "${DateFormat.yMMMMd().format(widget.date)} at ${widget.date.hour}:${widget.date.minute}"),
+              "${DateFormat.yMMMMd().format(widget.date)} at ${widget.date.hour}:${widget.date.minute}",
+            ),
             addHeight(SpacingSize.s),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -214,8 +225,9 @@ class _TokenTransactionTileState extends State<TokenTransactionTile> {
                   width: 30,
                   height: 30,
                   decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(width: 1, color: kPrimaryColor)),
+                    shape: BoxShape.circle,
+                    border: Border.all(width: 1, color: kPrimaryColor),
+                  ),
                   child: Icon(
                     widget.data.fromAddress.toLowerCase() ==
                             getWalletProvider(context)
@@ -258,12 +270,13 @@ class _TokenTransactionTileState extends State<TokenTransactionTile> {
                         color: Colors.green,
                         size: 12,
                         fontWeight: FontWeight.w700,
-                      )
+                      ),
                     ],
                   ),
                 ),
                 Text(
-                    "${(Decimal.parse(widget.data.value).toDouble() / pow(10, 18)).toStringAsFixed(5)} ${showEllipse(widget.data.tokenSymbol)}"),
+                  "${(Decimal.parse(widget.data.value).toDouble() / pow(10, 18)).toStringAsFixed(5)} ${showEllipse(widget.data.tokenSymbol)}",
+                ),
               ],
             ),
             addHeight(SpacingSize.s),

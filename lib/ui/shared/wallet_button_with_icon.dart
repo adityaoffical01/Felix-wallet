@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:wallet_cryptomask/constant.dart';
+import 'package:felix_wallet_crypto/constant.dart';
 import 'dart:io' show Platform;
 
 enum WalletButtonType { outline, filled }
@@ -10,13 +10,13 @@ class WalletButtonWithIcon extends StatefulWidget {
   final Function()? onPressed;
   final WalletButtonType type;
   final Widget icon;
-  const WalletButtonWithIcon(
-      {Key? key,
-      required this.textContent,
-      required this.onPressed,
-      required this.icon,
-      this.type = WalletButtonType.outline})
-      : super(key: key);
+  const WalletButtonWithIcon({
+    Key? key,
+    required this.textContent,
+    required this.onPressed,
+    required this.icon,
+    this.type = WalletButtonType.outline,
+  }) : super(key: key);
 
   @override
   State<WalletButtonWithIcon> createState() => _WalletButtonWithIconState();
@@ -33,15 +33,16 @@ class _WalletButtonWithIconState extends State<WalletButtonWithIcon> {
           style: OutlinedButton.styleFrom(
             foregroundColor: widget.type == WalletButtonType.filled
                 ? widget.onPressed != null
-                    ? Colors.white
-                    : Colors.grey
-                : kPrimaryColor, padding: kIsWeb || Platform.isMacOS
+                      ? Colors.white
+                      : Colors.grey
+                : kPrimaryColor,
+            padding: kIsWeb || Platform.isMacOS
                 ? const EdgeInsets.symmetric(horizontal: 17.0, vertical: 22)
                 : const EdgeInsets.symmetric(horizontal: 17.0, vertical: 10),
             backgroundColor: widget.type == WalletButtonType.filled
                 ? widget.onPressed != null
-                    ? kPrimaryColor
-                    : kPrimaryColor.withAlpha(80)
+                      ? kPrimaryColor
+                      : kPrimaryColor.withAlpha(80)
                 : Colors.transparent,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(30.0),
@@ -55,13 +56,13 @@ class _WalletButtonWithIconState extends State<WalletButtonWithIcon> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               widget.icon,
-              const SizedBox(
-                width: 4,
-              ),
+              const SizedBox(width: 4),
               Text(
                 widget.textContent,
-                style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                ),
               ),
             ],
           ),

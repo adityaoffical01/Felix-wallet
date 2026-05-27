@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wallet_cryptomask/core/providers/contact_provider/contact_provider.dart';
-import 'package:wallet_cryptomask/l10n/transalation.dart';
-import 'package:wallet_cryptomask/ui/screens/contacts-screen/widgets/add_contact.dart';
-import 'package:wallet_cryptomask/ui/screens/contacts-screen/widgets/contact_tile.dart';
-import 'package:wallet_cryptomask/ui/shared/wallet_text.dart';
-import 'package:wallet_cryptomask/ui/shared/wallet_text_field.dart';
-import 'package:wallet_cryptomask/ui/utils/App_Colors.dart';
+import 'package:felix_wallet_crypto/core/providers/contact_provider/contact_provider.dart';
+import 'package:felix_wallet_crypto/l10n/transalation.dart';
+import 'package:felix_wallet_crypto/ui/screens/contacts-screen/widgets/add_contact.dart';
+import 'package:felix_wallet_crypto/ui/screens/contacts-screen/widgets/contact_tile.dart';
+import 'package:felix_wallet_crypto/ui/shared/wallet_text.dart';
+import 'package:felix_wallet_crypto/ui/shared/wallet_text_field.dart';
+import 'package:felix_wallet_crypto/ui/utils/App_Colors.dart';
 import '../../../core/model/contact_model.dart';
 
 class AllContactScreen extends StatefulWidget {

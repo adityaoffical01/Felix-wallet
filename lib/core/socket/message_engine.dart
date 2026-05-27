@@ -1,8 +1,8 @@
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:wallet_cryptomask/core/model/message.dart';
-import 'package:wallet_cryptomask/core/socket/socket_service.dart';
+import 'package:felix_wallet_crypto/core/model/message.dart';
+import 'package:felix_wallet_crypto/core/socket/socket_service.dart';
 
 class MessageEngine extends ChangeNotifier {
   final SocketService _socketService = SocketService();
@@ -38,8 +38,10 @@ class MessageEngine extends ChangeNotifier {
     _socketService.getChatsByForId(id);
   }
 
-  static MessageEngine getMessageEngine(BuildContext context,
-      {bool listen = false}) {
+  static MessageEngine getMessageEngine(
+    BuildContext context, {
+    bool listen = false,
+  }) {
     return Provider.of<MessageEngine>(context, listen: listen);
   }
 

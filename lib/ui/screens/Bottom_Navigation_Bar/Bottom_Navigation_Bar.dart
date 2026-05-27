@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
-import 'package:wallet_cryptomask/constant.dart';
-import 'package:wallet_cryptomask/ui/screens/home-screen/new_home_screen.dart';
-import 'package:wallet_cryptomask/ui/screens/home-screen/widgets/account_change_sheet.dart';
-import 'package:wallet_cryptomask/ui/screens/home-screen/widgets/new_profile_account.dart';
-import 'package:wallet_cryptomask/ui/screens/transaction-history-screen/transaction_history_screen.dart';
-import 'package:wallet_cryptomask/ui/shared/wallet_button.dart';
-import 'package:wallet_cryptomask/ui/tabs/browser/browser_tab.dart';
+import 'package:felix_wallet_crypto/constant.dart';
+import 'package:felix_wallet_crypto/ui/screens/home-screen/new_home_screen.dart';
+import 'package:felix_wallet_crypto/ui/screens/home-screen/widgets/account_change_sheet.dart';
+import 'package:felix_wallet_crypto/ui/screens/home-screen/widgets/new_profile_account.dart';
+import 'package:felix_wallet_crypto/ui/screens/transaction-history-screen/transaction_history_screen.dart';
+import 'package:felix_wallet_crypto/ui/shared/wallet_button.dart';
+import 'package:felix_wallet_crypto/ui/tabs/browser/browser_tab.dart';
 
 class CustomNavigationBarWdget extends StatefulWidget {
   const CustomNavigationBarWdget({Key? key}) : super(key: key);

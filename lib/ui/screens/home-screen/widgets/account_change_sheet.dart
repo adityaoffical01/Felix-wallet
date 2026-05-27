@@ -3,11 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:wallet_cryptomask/core/providers/wallet_provider/wallet_provider.dart';
-import 'package:wallet_cryptomask/ui/shared/avatar_widget.dart';
-import 'package:wallet_cryptomask/ui/screens/import-account-screen/import_account_screen.dart';
-import 'package:wallet_cryptomask/ui/utils/App_Colors.dart';
-import 'package:wallet_cryptomask/ui/utils/spaces.dart';
+import 'package:felix_wallet_crypto/core/providers/wallet_provider/wallet_provider.dart';
+import 'package:felix_wallet_crypto/ui/shared/avatar_widget.dart';
+import 'package:felix_wallet_crypto/ui/screens/import-account-screen/import_account_screen.dart';
+import 'package:felix_wallet_crypto/ui/utils/App_Colors.dart';
+import 'package:felix_wallet_crypto/ui/utils/spaces.dart';
 
 class AccountChangeSheet extends StatefulWidget {
   final Function(String address, int? index)? onChange;

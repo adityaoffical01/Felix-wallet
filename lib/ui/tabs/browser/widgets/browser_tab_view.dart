@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:wallet_cryptomask/constant.dart';
-import 'package:wallet_cryptomask/ui/shared/wallet_text.dart';
-import 'package:wallet_cryptomask/ui/tabs/browser/widgets/browser_view.dart';
-import 'package:wallet_cryptomask/ui/shared/wallet_button.dart';
+import 'package:felix_wallet_crypto/constant.dart';
+import 'package:felix_wallet_crypto/ui/shared/wallet_text.dart';
+import 'package:felix_wallet_crypto/ui/tabs/browser/widgets/browser_view.dart';
+import 'package:felix_wallet_crypto/ui/shared/wallet_button.dart';
 
 class BrowserTabView extends StatefulWidget {
   final List<BrowserView> tabs;
@@ -11,12 +11,13 @@ class BrowserTabView extends StatefulWidget {
   final Function(BrowserView, int index) selectTab;
   final Function() createNewTab;
 
-  const BrowserTabView(
-      {super.key,
-      required this.tabs,
-      required this.onClose,
-      required this.createNewTab,
-      required this.selectTab});
+  const BrowserTabView({
+    super.key,
+    required this.tabs,
+    required this.onClose,
+    required this.createNewTab,
+    required this.selectTab,
+  });
 
   @override
   State<BrowserTabView> createState() => _BrowserTabViewState();
@@ -58,7 +59,7 @@ class _BrowserTabViewState extends State<BrowserTabView> {
               widget.createNewTab();
             },
             localizeKey: 'createNewTab',
-          )
+          ),
         ],
       ),
     );
@@ -69,7 +70,7 @@ class TabTile extends StatefulWidget {
   final Function(BrowserView) onClose;
   final BrowserView browserView;
   const TabTile({Key? key, required this.browserView, required this.onClose})
-      : super(key: key);
+    : super(key: key);
 
   @override
   State<TabTile> createState() => _TabTileState();
@@ -100,9 +101,9 @@ class _TabTileState extends State<TabTile> {
           children: [
             Container(
               decoration: BoxDecoration(
-                  color: Colors.grey.withAlpha(40),
-                  border:
-                      Border.all(width: 1, color: Colors.grey.withAlpha(40))),
+                color: Colors.grey.withAlpha(40),
+                border: Border.all(width: 1, color: Colors.grey.withAlpha(40)),
+              ),
               width: double.infinity,
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               child: Row(
@@ -116,22 +117,20 @@ class _TabTileState extends State<TabTile> {
                       return const Icon(Icons.public);
                     },
                   ),
-                  const SizedBox(
-                    width: 10,
-                  ),
+                  const SizedBox(width: 10),
                   Expanded(
-                      child: WalletText(
-                          localizeKey: widget.browserView.webViewModel.title ??
-                              "New tab")),
+                    child: WalletText(
+                      localizeKey:
+                          widget.browserView.webViewModel.title ?? "New tab",
+                    ),
+                  ),
                   IconButton(
-                      splashRadius: 10,
-                      onPressed: () {
-                        widget.onClose(widget.browserView);
-                      },
-                      icon: const Icon(
-                        Icons.close,
-                        size: 14,
-                      ))
+                    splashRadius: 10,
+                    onPressed: () {
+                      widget.onClose(widget.browserView);
+                    },
+                    icon: const Icon(Icons.close, size: 14),
+                  ),
                 ],
               ),
             ),
@@ -151,9 +150,9 @@ class _TabTileState extends State<TabTile> {
                       width: double.infinity,
                       height: double.infinity,
                       child: const Center(
-                          child: WalletText(
-                        localizeKey: 'newTab',
-                      ))),
+                        child: WalletText(localizeKey: 'newTab'),
+                      ),
+                    ),
             ),
           ],
         ),

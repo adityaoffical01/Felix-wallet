@@ -1484,7 +1484,7 @@
       "languageVersion": "3.4"
     },
     {
-      "name": "wallet_cryptomask",
+      "name": "felix_wallet_crypto",
       "rootUri": "../",
       "packageUri": "lib/",
       "languageVersion": "3.8"

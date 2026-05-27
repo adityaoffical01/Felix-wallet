@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wallet_cryptomask/config.dart';
-import 'package:wallet_cryptomask/core/providers/locale_provider/locale_provider.dart';
+import 'package:felix_wallet_crypto/config.dart';
+import 'package:felix_wallet_crypto/core/providers/locale_provider/locale_provider.dart';
 
 class Translations {
   final Map<String, dynamic> _localizedValues;
@@ -108,8 +108,8 @@ var en = {
   "@iUnserstandTheRecover": {
     "description": "Greet the user by their name.",
     "placeholders": {
-      "appName": {"type": "String"}
-    }
+      "appName": {"type": "String"},
+    },
   },
   "welcomeBack": "Welcome Back!",
   "confirmAndApprove": "Confirm and Approve",
@@ -219,8 +219,8 @@ var en = {
   "@about": {
     "description": "about",
     "placeholders": {
-      "appName": {"type": "String"}
-    }
+      "appName": {"type": "String"},
+    },
   },
   "currencyConversion": "Currency conversion",
   "displayFiat":
@@ -323,7 +323,7 @@ var en = {
   "couldNot": 'Could not launch',
   'somethingWentWrongInitial':
       "Something went wrong, Please check your internet connect",
-  "retry": "Retry"
+  "retry": "Retry",
 };
 
 var fr = {
@@ -403,8 +403,8 @@ var fr = {
   "@iUnserstandTheRecover": {
     "description": "Saluer l'utilisateur par son nom.",
     "placeholders": {
-      "appName": {"type": "String"}
-    }
+      "appName": {"type": "String"},
+    },
   },
   "welcomeBack": "Bon retour!",
   "confirmAndApprove": "Confirmer et approuver",
@@ -516,8 +516,8 @@ var fr = {
   "@about": {
     "description": "à propos",
     "placeholders": {
-      "appName": {"type": "String"}
-    }
+      "appName": {"type": "String"},
+    },
   },
   "currencyConversion": "Conversion de devises",
   "displayFiat":
@@ -624,15 +624,18 @@ var fr = {
   "couldNot": "Impossible de lancer",
   'somethingWentWrongInitial':
       "Quelque chose s'est mal passé, veuillez vérifier votre connexion Internet",
-  "retry": "réessayer"
+  "retry": "réessayer",
 };
 
 String getText(BuildContext context, {required String key}) {
   return Translations.of(context).get(key).replaceAll('{appName}', appName);
 }
 
-getTextWithPlaceholder(BuildContext context,
-    {required String key, required String string}) {
+getTextWithPlaceholder(
+  BuildContext context, {
+  required String key,
+  required String string,
+}) {
   String value = Translations.of(context).get(key);
   return value.replaceAll(RegExp(r'{(.*?)}'), string);
 }

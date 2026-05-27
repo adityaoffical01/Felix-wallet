@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wallet_cryptomask/l10n/transalation.dart';
+import 'package:felix_wallet_crypto/l10n/transalation.dart';
 
 enum TextVarient {
   hero,
@@ -10,7 +10,7 @@ enum TextVarient {
   body3,
   body4,
   body5,
-  body6
+  body6,
 }
 
 class WalletText extends StatelessWidget {
@@ -28,21 +28,22 @@ class WalletText extends StatelessWidget {
   final bool? bold;
   final bool? underline;
 
-  const WalletText(
-      {super.key,
-      this.size,
-      this.fontWeight,
-      this.color,
-      this.localizeKey,
-      this.align,
-      this.bold = false,
-      this.ellipsis = false,
-      this.underline = false,
-      this.height,
-      this.placeholderLocalizeKey,
-      this.center = false,
-      this.textVarient,
-      this.onTap});
+  const WalletText({
+    super.key,
+    this.size,
+    this.fontWeight,
+    this.color,
+    this.localizeKey,
+    this.align,
+    this.bold = false,
+    this.ellipsis = false,
+    this.underline = false,
+    this.height,
+    this.placeholderLocalizeKey,
+    this.center = false,
+    this.textVarient,
+    this.onTap,
+  });
 
   double getTextSize(TextVarient textVarient) {
     switch (textVarient) {
@@ -99,20 +100,24 @@ class WalletText extends StatelessWidget {
       onTap: onTap,
       child: Text(
         placeholderLocalizeKey != null
-            ? getTextWithPlaceholder(context,
+            ? getTextWithPlaceholder(
+                context,
                 key: localizeKey!,
-                string: getText(context, key: placeholderLocalizeKey!))
+                string: getText(context, key: placeholderLocalizeKey!),
+              )
             : getText(context, key: localizeKey!),
         textAlign: center! ? TextAlign.center : align,
         maxLines: (ellipsis != null && ellipsis!) ? 2 : null,
-        overflow:
-            (ellipsis != null && ellipsis!) ? TextOverflow.ellipsis : null,
+        overflow: (ellipsis != null && ellipsis!)
+            ? TextOverflow.ellipsis
+            : null,
         style: TextStyle(
           fontSize: textVarient != null ? getTextSize(textVarient!) : size,
           height: height,
           decoration: underline! ? TextDecoration.underline : null,
-          fontWeight:
-              textVarient != null ? getTextWeight(textVarient!) : fontWeight,
+          fontWeight: textVarient != null
+              ? getTextWeight(textVarient!)
+              : fontWeight,
           color: color ?? Colors.black,
         ),
       ),

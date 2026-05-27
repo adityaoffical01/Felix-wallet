@@ -10,14 +10,14 @@ import 'package:jazzicon/jazzicon.dart';
 import 'package:provider/provider.dart';
 import 'package:routerino/routerino.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:wallet_cryptomask/constant.dart';
-import 'package:wallet_cryptomask/core/remote/http.dart';
-import 'package:wallet_cryptomask/core/remote/response-model/register_user.dart';
-import 'package:wallet_cryptomask/core/socket/message_engine.dart';
-import 'package:wallet_cryptomask/ui/shared/wallet_button.dart';
-import 'package:wallet_cryptomask/ui/shared/wallet_text.dart';
-import 'package:wallet_cryptomask/ui/utils/spaces.dart';
-import 'package:wallet_cryptomask/ui/utils/ui_utils.dart';
+import 'package:felix_wallet_crypto/constant.dart';
+import 'package:felix_wallet_crypto/core/remote/http.dart';
+import 'package:felix_wallet_crypto/core/remote/response-model/register_user.dart';
+import 'package:felix_wallet_crypto/core/socket/message_engine.dart';
+import 'package:felix_wallet_crypto/ui/shared/wallet_button.dart';
+import 'package:felix_wallet_crypto/ui/shared/wallet_text.dart';
+import 'package:felix_wallet_crypto/ui/utils/spaces.dart';
+import 'package:felix_wallet_crypto/ui/utils/ui_utils.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -42,11 +42,15 @@ class _ChatScreenState extends State<ChatScreen> {
           name: result.files.single.name,
           onSend: (message) async {
             if (user.token != null) {
-              final media =
-                  await uploadFile(user.token!, file, result.files.single.name);
+              final media = await uploadFile(
+                user.token!,
+                file,
+                result.files.single.name,
+              );
               if (media != null && context.mounted) {
-                await MessageEngine.getMessageEngine(context)
-                    .sendMessageWithAttachment(message, media);
+                await MessageEngine.getMessageEngine(
+                  context,
+                ).sendMessageWithAttachment(message, media);
                 context.pop();
               }
             }
@@ -56,27 +60,26 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
-  showSendFileConfirmation(
-      {required String name, required Function(String message) onSend}) {
+  showSendFileConfirmation({
+    required String name,
+    required Function(String message) onSend,
+  }) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog.adaptive(
-        title: const WalletText(
-          localizeKey: 'confirmation',
-        ),
+        title: const WalletText(localizeKey: 'confirmation'),
         content: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,
           children: [
-            const WalletText(
-              localizeKey: 'fileSendAdminDialog',
-            ),
+            const WalletText(localizeKey: 'fileSendAdminDialog'),
             addHeight(SpacingSize.m),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
               decoration: BoxDecoration(
-                  color: kPrimaryColor.withAlpha(70),
-                  borderRadius: BorderRadius.circular(10)),
+                color: kPrimaryColor.withAlpha(70),
+                borderRadius: BorderRadius.circular(10),
+              ),
               child: Row(
                 children: [
                   const Icon(Icons.attach_file),
@@ -86,7 +89,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       name,
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -108,7 +111,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),
@@ -119,18 +122,18 @@ class _ChatScreenState extends State<ChatScreen> {
   void initState() {
     super.initState();
     setState(() {
-      me = ChatUser(
-        id: user.address,
-        firstName: showEllipse(user.address),
-      );
+      me = ChatUser(id: user.address, firstName: showEllipse(user.address));
     });
   }
 
   void onMediaPressHandler(ChatMedia media) {
-    launchUrl(Uri.parse(media.url),
-        mode: LaunchMode.externalApplication,
-        webViewConfiguration: WebViewConfiguration(
-            headers: {'Authorization': 'Bearer ${user.token}'}));
+    launchUrl(
+      Uri.parse(media.url),
+      mode: LaunchMode.externalApplication,
+      webViewConfiguration: WebViewConfiguration(
+        headers: {'Authorization': 'Bearer ${user.token}'},
+      ),
+    );
   }
 
   @override
@@ -142,7 +145,8 @@ class _ChatScreenState extends State<ChatScreen> {
             Hero(
               tag: 'avatar',
               child: Jazzicon.getIconWidget(
-                  Jazzicon.getJazziconData(30, address: "Admin")),
+                Jazzicon.getJazziconData(30, address: "Admin"),
+              ),
             ),
             addWidth(SpacingSize.m),
             const Expanded(
@@ -168,8 +172,9 @@ class _ChatScreenState extends State<ChatScreen> {
                 sendButtonBuilder: (send) => Row(
                   children: [
                     IconButton(
-                        onPressed: pickFile,
-                        icon: const Icon(Icons.attach_file)),
+                      onPressed: pickFile,
+                      icon: const Icon(Icons.attach_file),
+                    ),
                     IconButton(onPressed: send, icon: const Icon(Icons.send)),
                   ],
                 ),
@@ -179,15 +184,14 @@ class _ChatScreenState extends State<ChatScreen> {
               onSend: (ChatMessage message) {
                 final token = user.token;
                 if (token != null) {
-                  MessageEngine.getMessageEngine(context)
-                      .sendMessage(message.text);
+                  MessageEngine.getMessageEngine(
+                    context,
+                  ).sendMessage(message.text);
                 }
               },
               messages: Provider.of<MessageEngine>(context).messages,
             )
-          : const Center(
-              child: CircularProgressIndicator(),
-            ),
+          : const Center(child: CircularProgressIndicator()),
     );
   }
 }

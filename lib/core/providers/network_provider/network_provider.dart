@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
-import 'package:wallet_cryptomask/core/model/network_model.dart';
+import 'package:felix_wallet_crypto/core/model/network_model.dart';
 
 NetworkProvider getNetworkProvider(BuildContext context) =>
     Provider.of<NetworkProvider>(context, listen: false);

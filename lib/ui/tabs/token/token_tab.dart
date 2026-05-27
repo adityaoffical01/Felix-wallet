@@ -3,12 +3,12 @@ import 'dart:async';
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:wallet_cryptomask/core/providers/token_provider/token_provider.dart';
-import 'package:wallet_cryptomask/core/providers/wallet_provider/wallet_provider.dart';
-import 'package:wallet_cryptomask/core/model/token_model.dart';
-import 'package:wallet_cryptomask/ui/shared/wallet_text.dart';
-import 'package:wallet_cryptomask/ui/screens/token-dashboard-screen/token_dashboard_screen.dart';
-import 'package:wallet_cryptomask/ui/tabs/token/widgets/token_tile.dart';
+import 'package:felix_wallet_crypto/core/providers/token_provider/token_provider.dart';
+import 'package:felix_wallet_crypto/core/providers/wallet_provider/wallet_provider.dart';
+import 'package:felix_wallet_crypto/core/model/token_model.dart';
+import 'package:felix_wallet_crypto/ui/shared/wallet_text.dart';
+import 'package:felix_wallet_crypto/ui/screens/token-dashboard-screen/token_dashboard_screen.dart';
+import 'package:felix_wallet_crypto/ui/tabs/token/widgets/token_tile.dart';
 
 class TokenTab extends StatefulWidget {
   const TokenTab({Key? key}) : super(key: key);
