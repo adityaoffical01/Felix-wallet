@@ -11,9 +11,7 @@ import 'package:wallet_cryptomask/ui/screens/token-dashboard-screen/token_dashbo
 import 'package:wallet_cryptomask/ui/tabs/token/widgets/token_tile.dart';
 
 class TokenTab extends StatefulWidget {
-  const TokenTab({
-    Key? key,
-  }) : super(key: key);
+  const TokenTab({Key? key}) : super(key: key);
 
   @override
   State<TokenTab> createState() => _TokenTabState();
@@ -30,17 +28,16 @@ class _TokenTabState extends State<TokenTab> {
 
   setupAndLoadToken() async {
     final tokens = await getTokenProvider(context).loadToken(
-        nativeBalance: getWalletProvider(context).nativeBalance,
-        address: getWalletProvider(context)
-            .activeWallet
-            .wallet
-            .privateKey
-            .address
-            .hex,
-        network: getWalletProvider(context).activeNetwork);
-    if (mounted) {
-      getWalletProvider(context)
-          .changeFiatBalance(tokens[0].balanceInFiat.toStringAsFixed(5));
+      nativeBalance: getWalletProvider(context).nativeBalance,
+      address: getWalletProvider(
+        context,
+      ).activeWallet.wallet.privateKey.address.hex,
+      network: getWalletProvider(context).activeNetwork,
+    );
+    if (mounted && tokens.isNotEmpty) {
+      getWalletProvider(
+        context,
+      ).changeFiatBalance(tokens[0].balanceInFiat.toStringAsFixed(5));
     }
   }
 
@@ -63,42 +60,43 @@ class _TokenTabState extends State<TokenTab> {
                   itemCount: Provider.of<TokenProvider>(context).tokens.length,
                   itemBuilder: (context, index) => InkWell(
                     onTap: () => onTokenPressHandler(
-                        Provider.of<TokenProvider>(context, listen: false)
-                            .tokens[index]),
+                      Provider.of<TokenProvider>(
+                        context,
+                        listen: false,
+                      ).tokens[index],
+                    ),
                     child: TokenTile(
-                      imageUrl:
-                          Provider.of<TokenProvider>(context, listen: false)
-                              .tokens[index]
-                              .imageUrl,
-                      decimal:
-                          Provider.of<TokenProvider>(context, listen: false)
-                              .tokens[index]
-                              .decimal,
-                      tokenAddress:
-                          Provider.of<TokenProvider>(context, listen: false)
-                              .tokens[index]
-                              .tokenAddress,
+                      imageUrl: Provider.of<TokenProvider>(
+                        context,
+                        listen: false,
+                      ).tokens[index].imageUrl,
+                      decimal: Provider.of<TokenProvider>(
+                        context,
+                        listen: false,
+                      ).tokens[index].decimal,
+                      tokenAddress: Provider.of<TokenProvider>(
+                        context,
+                        listen: false,
+                      ).tokens[index].tokenAddress,
                       balance: Decimal.parse(
-                          Provider.of<TokenProvider>(context, listen: false)
-                              .tokens[index]
-                              .balance
-                              .toString()),
-                      symbol: Provider.of<TokenProvider>(context, listen: false)
-                          .tokens[index]
-                          .symbol,
-                      balanceInFiat:
-                          Provider.of<TokenProvider>(context, listen: false)
-                              .tokens[index]
-                              .balanceInFiat,
+                        Provider.of<TokenProvider>(
+                          context,
+                          listen: false,
+                        ).tokens[index].balance.toString(),
+                      ),
+                      symbol: Provider.of<TokenProvider>(
+                        context,
+                        listen: false,
+                      ).tokens[index].symbol,
+                      balanceInFiat: Provider.of<TokenProvider>(
+                        context,
+                        listen: false,
+                      ).tokens[index].balanceInFiat,
                     ),
                   ),
                 ),
               )
-            : const Center(
-                child: WalletText(
-                  localizeKey: 'youDontHaveToken',
-                ),
-              ),
+            : const Center(child: WalletText(localizeKey: 'youDontHaveToken')),
       ],
     );
   }
