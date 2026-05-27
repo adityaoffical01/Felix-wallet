@@ -20,6 +20,7 @@ TokenProvider getTokenProvider(BuildContext context) =>
 
 class TokenProvider extends ChangeNotifier {
   List<Token> tokens = [];
+  List<Map<String, dynamic>> felixTokenDetails = [];
   final Box userPreference;
 
   TokenProvider({required this.userPreference});
@@ -29,6 +30,59 @@ class TokenProvider extends ChangeNotifier {
     required String address,
     required Network network,
   }) async {
+    if (network.chainId == 778400) {
+      final felixTokens = <Token>[];
+
+      final nativeRawBalance = await RemoteServer.getFelixNativeBalance(address);
+      final nativeBalanceValue = nativeRawBalance == null
+          ? 0.0
+          : _normalizeFelixTokenBalance(nativeRawBalance, 18);
+      felixTokens.add(
+        Token(
+          tokenAddress: "",
+          symbol: "FLXG",
+          decimal: 18,
+          balance: nativeBalanceValue,
+          balanceInFiat: 0,
+          imageUrl: "assets/images/felix.png",
+        ),
+      );
+
+      final details = await RemoteServer.getFelixTokenDetailList();
+      felixTokenDetails = details;
+
+      for (final detail in details) {
+        final contractAddress = detail["contractAddress"]?.toString() ?? "";
+        final symbol = detail["symbol"]?.toString() ?? "TOKEN";
+        final decimal = int.tryParse(detail["decimals"]?.toString() ?? "18") ?? 18;
+        final rawBalance = await RemoteServer.getFelixTokenBalance(
+          contractAddress: contractAddress,
+          address: address,
+        );
+        final normalizedBalance = rawBalance == null
+            ? 0.0
+            : _normalizeFelixTokenBalance(rawBalance, decimal);
+
+        if (normalizedBalance <= 0) {
+          continue;
+        }
+
+        felixTokens.add(
+          Token(
+            tokenAddress: contractAddress.toLowerCase(),
+            symbol: symbol,
+            decimal: decimal,
+            balance: normalizedBalance,
+            balanceInFiat: 0,
+          ),
+        );
+      }
+
+      tokens = felixTokens;
+      notifyListeners();
+      return tokens;
+    }
+
     try {
       final moralisTokenResponse = await RemoteServer.getTokens(
           address: address, chainId: network.chainId.toString());
@@ -52,6 +106,12 @@ class TokenProvider extends ChangeNotifier {
 
     notifyListeners();
     return tokens;
+  }
+
+  double _normalizeFelixTokenBalance(BigInt rawBalance, int decimals) {
+    final divisor = Decimal.fromInt(pow(10, decimals).toInt());
+    final converted = Decimal.parse(rawBalance.toString()) / divisor;
+    return converted.toDouble();
   }
 
   String getTokenStorageKey({required address, required Network network}) {

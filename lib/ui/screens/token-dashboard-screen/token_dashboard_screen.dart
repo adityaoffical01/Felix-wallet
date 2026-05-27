@@ -348,10 +348,7 @@ class _TokenDashboardScreenState extends State<TokenDashboardScreen> {
                             ),
                             child: IconButton(
                               onPressed: () => {
-                                Navigator.of(
-                                  context,
-                                  rootNavigator: true,
-                                ).push(
+                                Navigator.of(context, rootNavigator: true).push(
                                   MaterialPageRoute(
                                     builder: (_) => TransferScreen(
                                       balance: "0",
