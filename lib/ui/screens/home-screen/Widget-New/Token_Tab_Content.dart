@@ -163,6 +163,7 @@ class _TokenTabContentState extends State<TokenTabContent> {
         Provider.of<TokenProvider>(context).tokens.isNotEmpty
             ? Expanded(
                 child: ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: Provider.of<TokenProvider>(context).tokens.length,
                   itemBuilder: (context, index) => InkWell(
                     onTap: () => onTokenPressHandler(

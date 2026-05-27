@@ -3,6 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:wallet_cryptomask/constant.dart';
 import 'package:wallet_cryptomask/ui/screens/home-screen/Widget-New/Token_Tab_Content.dart';
@@ -35,6 +36,7 @@ class NewHomeScreen extends StatefulWidget {
     required IconData icon,
     required String title,
     required VoidCallback onTap,
+    required Color color,
   }) {
     return Expanded(
       child: Material(
@@ -43,15 +45,28 @@ class NewHomeScreen extends StatefulWidget {
           borderRadius: appRadius(SpacingSize.m),
           onTap: onTap,
           child: Container(
-            height: 80,
+            height: 100,
             decoration: BoxDecoration(
               borderRadius: appRadius(SpacingSize.m),
-              color: AppColors.liteGrey.withOpacity(0.5),
+              border: Border.all(color: AppColors.liteGrey, width: 0.5),
+              color: AppColors.liteGrey.withOpacity(0.2),
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(icon, size: 22, color: Colors.black),
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [color.withOpacity(0.15), color],
+                    ),
+                    shape: BoxShape.circle,
+                    // color: AppColors.primaryColor,
+                  ),
+                  child: Icon(icon, size: 22, color: AppColors.white),
+                ),
                 const SizedBox(height: 6),
                 Text(
                   title,
@@ -129,7 +144,7 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
         return ChangeNetworkSheet(address: address);
       },
     );
-    _onRefresh();
+    await _onRefresh();
   }
 
   onSendHandler() {
@@ -163,12 +178,13 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
 
   Future<void> _onRefresh() async {
     final walletProvider = getWalletProvider(context);
+    await walletProvider.updateBalance();
     final tokens = await getTokenProvider(context).loadToken(
       nativeBalance: walletProvider.nativeBalance,
       address: walletProvider.activeWallet.wallet.privateKey.address.hex,
       network: walletProvider.activeNetwork,
     );
-    await walletProvider.updateBalance();
+
     if (mounted && tokens.isNotEmpty) {
       walletProvider.changeFiatBalance(
         tokens[0].balanceInFiat.toStringAsFixed(5),
@@ -210,29 +226,65 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
                 ),
               ),
               actions: [
-                IconButton(
-                  onPressed: onAddressTapHandler,
-                  icon: const Icon(Iconsax.copy_copy),
+                GestureDetector(
+                  onTap: onAddressTapHandler,
+                  child: Container(
+                    padding: const EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: AppColors.liteGrey),
+                    ),
+                    child: const Icon(
+                      Iconsax.copy_copy,
+                      color: AppColors.primaryColor,
+                      size: 18,
+                    ),
+                  ),
                 ),
-                IconButton(
-                  onPressed: onSendHandler,
-                  icon: const Icon(CupertinoIcons.qrcode),
+                const SizedBox(width: 8.0),
+                GestureDetector(
+                  onTap: onSendHandler,
+                  child: Container(
+                    padding: const EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: AppColors.liteGrey),
+                    ),
+                    child: const Icon(
+                      CupertinoIcons.qrcode,
+                      color: AppColors.primaryColor,
+                      size: 18,
+                    ),
+                  ),
                 ),
-                IconButton(
-                  onPressed: () {
+                const SizedBox(width: 8.0),
+                GestureDetector(
+                  onTap: () {
                     showWarningSnackBar(
                       context,
                       getText(context, key: 'Notifications'),
                       getText(context, key: 'Is comming soon'),
                     );
-                    // Navigator.of(context, rootNavigator: true).push(
-                    //   MaterialPageRoute(
-                    //     builder: (context) => const HomeScreen(),
-                    //   ),
-                    // );
                   },
-                  icon: const Icon(Iconsax.notification_copy),
+                  // Navigator.of(context, rootNavigator: true).push(
+                  //   MaterialPageRoute(
+                  //     builder: (context) => const HomeScreen(),
+                  //   ),
+                  // );
+                  child: Container(
+                    padding: const EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: AppColors.liteGrey),
+                    ),
+                    child: const Icon(
+                      Iconsax.notification_copy,
+                      color: AppColors.primaryBlack,
+                      size: 18,
+                    ),
+                  ),
                 ),
+                const SizedBox(width: 12.0),
               ],
             ),
 
@@ -252,105 +304,134 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
                           children: [
                             /// ================= BALANCE CARD =================
                             Container(
-                              width: double.infinity,
-                              padding: const EdgeInsets.all(12.0),
                               decoration: BoxDecoration(
                                 borderRadius: appRadius(SpacingSize.m),
-                                color: AppColors.liteGrey.withOpacity(0.5),
+                                border: Border.all(
+                                  color: AppColors.primaryColor.withOpacity(
+                                    0.1,
+                                  ),
+                                  width: 1.5,
+                                ),
                               ),
-                              child: Column(
+                              child: Stack(
                                 children: [
-                                  // addHeight(SpacingSize.xs),
-                                  Center(
+                                  ClipRRect(
+                                    borderRadius: appRadius(SpacingSize.m),
                                     child: Image.asset(
-                                      'assets/images/wallet_bank.png',
-                                      height: 80.0,
-                                      width: 80.0,
-                                      fit: BoxFit.contain,
+                                      'assets/icons/wallet_background.png',
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
-                                  Text(
-                                    'Fund Your Wallet',
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold,
-                                      color: AppColors.primaryBlack,
-                                    ),
-                                  ),
-                                  addHeight(SpacingSize.xxs),
-                                  Text(
-                                    Provider.of<WalletProvider>(
-                                      context,
-                                    ).getNativeBalanceFormatted(),
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 18.0,
-                                      color: Colors.black54,
-                                    ),
-                                  ),
-                                  Text(
-                                    Provider.of<WalletProvider>(
-                                      context,
-                                    ).getPreferedBalanceFormatted(),
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 12.0,
-                                      color: Colors.black54,
-                                    ),
-                                  ),
-                                  addHeight(SpacingSize.xs),
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 24.0,
-                                      vertical: 10.0,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12.0),
-                                      border: Border.all(
-                                        color: AppColors.primaryBlack,
-                                        width: 1.5,
-                                      ),
-                                      // color: AppColors.primaryColor,
-                                      // gradient: const LinearGradient(
-                                      //   begin: Alignment.centerLeft,
-                                      //   end: Alignment.centerRight,
-                                      //   colors: [
-                                      //     Color.fromARGB(255, 125, 194, 255),
-                                      //     Color.fromARGB(255, 38, 119, 225),
-                                      //   ],
-                                      // ),
-                                    ),
-                                    child: InkWell(
-                                      onTap: onAddressTapHandler,
-                                      child: Row(
-                                        spacing: 6.0,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          WalletText(
-                                            textVarient: TextVarient.body1,
-                                            localizeKey: showEllipse(
-                                              getLiveWalletProvider(context)
-                                                  .activeWallet
-                                                  .wallet
-                                                  .privateKey
-                                                  .address
-                                                  .hex,
+                                  Positioned(
+                                    bottom: 8,
+                                    right: 8,
+                                    left: 8,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          'Fund Your Wallet',
+                                          style: GoogleFonts.lato(
+                                            fontSize: 22,
+                                            fontWeight: FontWeight.bold,
+                                            color: AppColors.primaryBlack,
+                                          ),
+                                        ),
+                                        Text(
+                                          Provider.of<WalletProvider>(
+                                            context,
+                                          ).getNativeBalanceFormatted(),
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 18.0,
+                                            color: AppColors.primaryColor,
+                                          ),
+                                        ),
+                                        Text(
+                                          Provider.of<WalletProvider>(
+                                            context,
+                                          ).getPreferedBalanceFormatted(),
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 12.0,
+                                            color: Colors.black54,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 4.0),
+                                        Container(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 12.0,
+                                            vertical: 6.0,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            color: AppColors.white,
+                                            borderRadius: BorderRadius.circular(
+                                              12.0,
                                             ),
-
-                                            color: AppColors.primaryBlack,
+                                            border: Border.all(
+                                              color: AppColors.liteGrey,
+                                            ),
                                           ),
+                                          child: InkWell(
+                                            onTap: onAddressTapHandler,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Container(
+                                                  padding: const EdgeInsets.all(
+                                                    4.0,
+                                                  ),
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                      color: AppColors
+                                                          .primaryColor
+                                                          .withOpacity(0.1),
+                                                    ),
+                                                    shape: BoxShape.circle,
+                                                    color: AppColors
+                                                        .primaryColor
+                                                        .withOpacity(0.05),
+                                                  ),
+                                                  child: const Icon(
+                                                    Iconsax.shield_slash,
+                                                    size: 22,
+                                                    color:
+                                                        AppColors.primaryColor,
+                                                  ),
+                                                ),
+                                                WalletText(
+                                                  textVarient:
+                                                      TextVarient.body2,
 
-                                          const Icon(
-                                            Iconsax.copy_copy,
-                                            size: 16,
-                                            color: AppColors.primaryBlack,
+                                                  localizeKey: showEllipse(
+                                                    getLiveWalletProvider(
+                                                          context,
+                                                        )
+                                                        .activeWallet
+                                                        .wallet
+                                                        .privateKey
+                                                        .address
+                                                        .hex,
+                                                  ),
+                                                  color: AppColors.primaryBlack,
+                                                ),
+
+                                                const Icon(
+                                                  Iconsax.copy_copy,
+                                                  size: 22,
+                                                  color: AppColors.primaryColor,
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  addHeight(SpacingSize.xxs),
                                 ],
                               ),
                             ),
@@ -371,6 +452,7 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
                                       getText(context, key: 'Is comming soon'),
                                     );
                                   },
+                                  color: AppColors.green,
                                 ),
                                 NewHomeScreen._actionButton(
                                   icon: Iconsax.arrow_swap_copy,
@@ -382,16 +464,19 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
                                       getText(context, key: 'Is comming soon'),
                                     );
                                   },
+                                  color: AppColors.purple,
                                 ),
                                 NewHomeScreen._actionButton(
                                   icon: Iconsax.send_1_copy,
                                   title: 'Send',
                                   onTap: onSendHandler,
+                                  color: AppColors.blue,
                                 ),
                                 NewHomeScreen._actionButton(
                                   icon: Iconsax.received_copy,
                                   title: 'Receive',
                                   onTap: onReceiveHandler,
+                                  color: AppColors.amber,
                                 ),
                               ],
                             ),
