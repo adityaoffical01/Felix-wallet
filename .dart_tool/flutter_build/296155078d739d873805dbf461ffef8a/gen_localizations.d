@@ -1,1 +1,0 @@
- /Users/adityabaudh/Devloper/Faiz/cryptomask_user_felix/lib/l10n/app_localizations_en.dart /Users/adityabaudh/Devloper/Faiz/cryptomask_user_felix/lib/l10n/app_localizations.dart:  /Users/adityabaudh/Devloper/Faiz/cryptomask_user_felix/l10n.yaml /Users/adityabaudh/Devloper/Faiz/cryptomask_user_felix/lib/l10n/app_en.arb

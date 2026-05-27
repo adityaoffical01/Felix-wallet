@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'dart:convert';
 import 'package:decimal/decimal.dart';
 import 'package:equatable/equatable.dart';
