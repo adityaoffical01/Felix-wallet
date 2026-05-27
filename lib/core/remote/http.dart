@@ -101,10 +101,8 @@ class RemoteServer {
         '$baseUrl/api/user/tokens/$address/$chainId',
         options: Options(headers: {"Authorization": "Bearer ${user.token}"}),
       );
-      print('ResponseDATA: ${response.data}');
+
       return MoralisTokensResponse.fromJson(response.data);
-    } on DioException catch (e) {
-      rethrow;
     } catch (e) {
       print('getTokens Unexpected Error: $e');
       rethrow;
@@ -149,6 +147,117 @@ class RemoteServer {
       data: {"message": message, "hash": hash, "address": address},
     );
     return ResigterUserResponse.fromJson(response.data);
+  }
+
+  static Future<BigInt?> getFelixNativeBalance(String address) async {
+    try {
+      final response = await dio.get(
+        'https://felixexplorer.com/api?module=account&action=eth_get_balance&address=$address',
+        options: Options(headers: {'accept': 'application/json'}),
+      );
+      final rawHex = response.data["result"]?.toString();
+      if (rawHex == null || !rawHex.startsWith("0x")) {
+        return null;
+      }
+      return BigInt.parse(rawHex.substring(2), radix: 16);
+    } catch (e) {
+      log(e.toString());
+      return null;
+    }
+  }
+
+  static Future<List<String>> getFelixContractList() async {
+    try {
+      final response = await dio.get(
+        'https://felixexplorer.com/api?module=contract&action=listcontracts',
+        options: Options(headers: {'accept': 'application/json'}),
+      );
+      print('Felix listcontracts response: ${response.data}');
+
+      final status = response.data["status"]?.toString();
+      if (status != "1") {
+        return [];
+      }
+      final result = response.data["result"];
+      if (result is! List) {
+        return [];
+      }
+      print('Felix listcontracts result length: ${result.toList()}');
+      return result
+          .map((item) => item["Address"]?.toString().toLowerCase())
+          .whereType<String>()
+          .where((address) => address.isNotEmpty)
+          .toList();
+    } catch (e) {
+      log(e.toString());
+      return [];
+    }
+  }
+
+  static Future<Map<String, dynamic>?> getFelixTokenDetail(
+    String contractAddress,
+  ) async {
+    try {
+      final response = await dio.get(
+        'https://felixexplorer.com/api?module=token&action=getToken&contractaddress=$contractAddress',
+        options: Options(headers: {'accept': 'application/json'}),
+      );
+      print('Felix getToken [$contractAddress] response: ${response.data}');
+
+      if (response.data["status"]?.toString() != "1") {
+        return null;
+      }
+      final result = response.data["result"];
+      if (result is! Map<String, dynamic>) {
+        return null;
+      }
+      return result;
+    } catch (e) {
+      log(e.toString());
+      return null;
+    }
+  }
+
+  static Future<List<Map<String, dynamic>>> getFelixTokenDetailList() async {
+    final details = <Map<String, dynamic>>[];
+    final contracts = await getFelixContractList();
+
+    for (final contract in contracts) {
+      final tokenDetail = await getFelixTokenDetail(contract);
+      if (tokenDetail != null) {
+        details.add(tokenDetail);
+      }
+    }
+
+    print('Felix getToken final details list: $details');
+    return details;
+  }
+
+  static Future<BigInt?> getFelixTokenBalance({
+    required String contractAddress,
+    required String address,
+  }) async {
+    try {
+      final response = await dio.get(
+        'https://felixexplorer.com/api?module=account&action=tokenbalance&contractaddress=$contractAddress&address=$address',
+        options: Options(headers: {'accept': 'application/json'}),
+      );
+      print(
+        'Felix tokenbalance [$contractAddress][$address] response: ${response.data}',
+      );
+
+      if (response.data["status"]?.toString() != "1") {
+        return null;
+      }
+      final rawBalance = response.data["result"]?.toString();
+      if (rawBalance == null || rawBalance.isEmpty) {
+        return null;
+      }
+      return BigInt.tryParse(rawBalance);
+    } catch (e) {
+      log(e.toString());
+      return null;
+    }
   }
 }
 

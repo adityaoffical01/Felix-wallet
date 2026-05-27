@@ -236,14 +236,26 @@ class WalletProvider extends ChangeNotifier {
 
   Future<void> updateBalance() async {
     try {
-      final balance = await web3client.getBalance(
-        activeWallet.wallet.privateKey.address,
-      );
-      changeNativeBalance(balance.getValueInUnit(EtherUnit.ether));
+      if (activeNetwork.chainId == 778400) {
+        final rawBalance = await RemoteServer.getFelixNativeBalance(
+          activeWallet.wallet.privateKey.address.hex,
+        );
+        if (rawBalance != null) {
+          final convertedBalance = EtherAmount.inWei(
+            rawBalance,
+          ).getValueInUnit(EtherUnit.ether);
+          changeNativeBalance(convertedBalance);
+        }
+      } else {
+        final balance = await web3client.getBalance(
+          activeWallet.wallet.privateKey.address,
+        );
+        changeNativeBalance(balance.getValueInUnit(EtherUnit.ether));
+      }
       networkSwitched();
     } catch (e) {
       if (kDebugMode) {
-        print("updateBalance error: $e");
+        print("updateBalance error: ${e.toString()}");
       }
     }
   }

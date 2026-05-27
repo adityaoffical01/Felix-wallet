@@ -303,6 +303,21 @@ class _BrowserViewState extends State<BrowserView> {
       }
     }
 
+    if (method == 'eth_getTransactionReceipt') {
+      try {
+        if (params is! List || params.isEmpty) {
+          return _failure(method, "Invalid eth_getTransactionReceipt params");
+        }
+        final result = await walletProvider.web3client.makeRPCCall<dynamic>(
+          'eth_getTransactionReceipt',
+          params,
+        );
+        return {'success': true, 'data': result};
+      } catch (e) {
+        return _failure(method, e.toString());
+      }
+    }
+
     if (method == 'wallet_switchEthereumChain') {
       try {
         if (params is List && params.isNotEmpty && params.first is Map) {
@@ -359,11 +374,9 @@ class _BrowserViewState extends State<BrowserView> {
           transaction: transaction.toJson(),
           onApprove: (txHash) {
             if (!completer.isCompleted) completer.complete(txHash);
-            Navigator.of(sheetContext).pop();
           },
           onReject: () {
             if (!completer.isCompleted) completer.complete(null);
-            Navigator.of(sheetContext).pop();
           },
         ),
       ),

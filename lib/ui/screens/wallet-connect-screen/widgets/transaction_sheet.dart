@@ -3,7 +3,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +13,7 @@ import 'package:wallet_cryptomask/core/providers/browser_provider/browser_provid
 import 'package:wallet_cryptomask/l10n/transalation.dart';
 import 'package:wallet_cryptomask/ui/shared/wallet_button.dart';
 import 'package:wallet_cryptomask/ui/shared/wallet_text.dart';
+import 'package:wallet_cryptomask/ui/utils/App_Colors.dart';
 import 'package:wallet_cryptomask/ui/utils/spaces.dart';
 import 'package:web3dart/crypto.dart';
 import 'package:web3dart/web3dart.dart';
@@ -42,6 +43,46 @@ class TransactionSheet extends StatefulWidget {
 class _TransactionSheetState extends State<TransactionSheet> {
   Transaction? transaction;
   EtherAmount gasPrice = EtherAmount.zero();
+  bool _isSubmitting = false;
+
+  Future<void> _handleApprove() async {
+    if (_isSubmitting || transaction == null) return;
+    setState(() {
+      _isSubmitting = true;
+    });
+
+    try {
+      final currentState = Provider.of<WalletProvider>(context, listen: false);
+      final txhash = await currentState.web3client
+          .sendTransaction(
+            currentState.activeWallet.wallet.privateKey,
+            transaction!,
+            chainId: currentState.activeNetwork.chainId,
+          )
+          .timeout(
+            const Duration(seconds: 25),
+            onTimeout: () => throw Exception("Transaction request timed out"),
+          );
+      log("DAPP REQUST =====> $txhash");
+      if (mounted) {
+        Navigator.of(context).pop();
+      }
+      widget.onApprove(txhash);
+    } catch (e) {
+      debugPrint("TransactionSheet approve error: $e");
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Transaction failed: ${e.toString()}")),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isSubmitting = false;
+        });
+      }
+    }
+  }
 
   @override
   void initState() {
@@ -53,6 +94,7 @@ class _TransactionSheetState extends State<TransactionSheet> {
   prepareTransaction() async {
     var currentState = Provider.of<WalletProvider>(context, listen: false);
     var gasPrice = await currentState.web3client.getGasPrice();
+    if (!mounted) return;
     setState(() {
       this.gasPrice = gasPrice;
     });
@@ -78,6 +120,7 @@ class _TransactionSheetState extends State<TransactionSheet> {
           ? hexToDartInt(widget.transaction["gas"])
           : null,
     );
+    if (!mounted) return;
     setState(() {});
   }
 
@@ -315,10 +358,12 @@ class _TransactionSheetState extends State<TransactionSheet> {
                                   Expanded(
                                     child: WalletButton(
                                       localizeKey: "reject",
-                                      onPressed: () async {
-                                        widget.onReject();
-                                        Navigator.of(context).pop();
-                                      },
+                                      onPressed: _isSubmitting
+                                          ? null
+                                          : () async {
+                                              Navigator.of(context).pop();
+                                              widget.onReject();
+                                            },
                                     ),
                                   ),
                                   getLiveWalletProvider(context).nativeBalance >
@@ -327,29 +372,9 @@ class _TransactionSheetState extends State<TransactionSheet> {
                                           child: WalletButton(
                                             localizeKey: "approve",
                                             type: WalletButtonType.filled,
-                                            onPressed: () async {
-                                              var currentState =
-                                                  Provider.of<WalletProvider>(
-                                                    context,
-                                                    listen: false,
-                                                  );
-
-                                              var txhash = await currentState
-                                                  .web3client
-                                                  .sendTransaction(
-                                                    currentState
-                                                        .activeWallet
-                                                        .wallet
-                                                        .privateKey,
-                                                    transaction!,
-                                                    chainId: currentState
-                                                        .activeNetwork
-                                                        .chainId,
-                                                  );
-                                              log("DAPP REQUST =====> $txhash");
-                                              widget.onApprove(txhash);
-                                              Navigator.of(context).pop();
-                                            },
+                                            onPressed: _isSubmitting
+                                                ? null
+                                                : _handleApprove,
                                           ),
                                         )
                                       : const WalletText(
@@ -367,30 +392,39 @@ class _TransactionSheetState extends State<TransactionSheet> {
                   )
                 : Column(
                     children: [
-                      addHeight(SpacingSize.xxxl),
-
+                      addHeight(SpacingSize.xs),
+                      //aditya_deosit
                       CircleAvatar(
                         radius: 25,
                         backgroundColor: Colors.white,
-                        child: CachedNetworkImage(
-                          imageUrl: widget.iconUrl,
-                          errorWidget: (context, url, error) =>
-                              const CircleAvatar(
-                                // radius: 35,
-                                child: Center(
-                                  child: Icon(Icons.public, size: 25),
-                                ),
-                              ),
+                        child: Image.asset(
+                          'assets/icons/icon.png',
+                          width: 45,
+                          height: 45,
                         ),
                       ),
-                      const SizedBox(height: 20),
+                      // CircleAvatar(
+                      //   radius: 25,
+                      //   backgroundColor: Colors.white,
+                      //   child: CachedNetworkImage(
+                      //     imageUrl: widget.iconUrl,
+                      //     errorWidget: (context, url, error) =>
+                      //         const CircleAvatar(
+                      //           // radius: 35,
+                      //           child: Center(
+                      //             child: Icon(Icons.public, size: 25),
+                      //           ),
+                      //         ),
+                      //   ),
+                      // ),
+                      addHeight(SpacingSize.xs),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             widget.connectingOrgin.contains("https")
-                                ? const Icon(Icons.lock, size: 16)
+                                ? const Icon(CupertinoIcons.lock_fill, size: 16)
                                 : const SizedBox(),
                             Text(
                               widget.connectingOrgin
@@ -403,13 +437,15 @@ class _TransactionSheetState extends State<TransactionSheet> {
                           ],
                         ),
                       ),
-                      addHeight(SpacingSize.s),
-
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16),
-                        child: WalletText(localizeKey: 'isRequesting'),
+                      addHeight(SpacingSize.xxs),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: WalletText(
+                          localizeKey: 'isRequesting',
+                          color: AppColors.grey,
+                        ),
                       ),
-                      addHeight(SpacingSize.m),
+                      addHeight(SpacingSize.xxs),
 
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -574,48 +610,35 @@ class _TransactionSheetState extends State<TransactionSheet> {
                                 SizedBox(
                                   height: 50,
                                   width: double.infinity,
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        child: WalletButton(
-                                          localizeKey: "reject",
-                                          onPressed: () async {
-                                            widget.onReject();
-                                            Navigator.of(context).pop();
-                                          },
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 16.0,
+                                    ),
+                                    child: Row(
+                                      spacing: 10,
+                                      children: [
+                                        Expanded(
+                                          child: WalletButton(
+                                            localizeKey: "reject",
+                                            onPressed: _isSubmitting
+                                                ? null
+                                                : () async {
+                                                    Navigator.of(context).pop();
+                                                    widget.onReject();
+                                                  },
+                                          ),
                                         ),
-                                      ),
-                                      Expanded(
-                                        child: WalletButton(
-                                          localizeKey: "approve",
-                                          type: WalletButtonType.filled,
-                                          onPressed: () async {
-                                            var currentState =
-                                                Provider.of<WalletProvider>(
-                                                  context,
-                                                  listen: false,
-                                                );
-
-                                            var txhash = await currentState
-                                                .web3client
-                                                .sendTransaction(
-                                                  currentState
-                                                      .activeWallet
-                                                      .wallet
-                                                      .privateKey,
-                                                  transaction!,
-                                                  chainId: currentState
-                                                      .activeNetwork
-                                                      .chainId,
-                                                );
-                                            log("DAPP REQUST =====> $txhash");
-                                            widget.onApprove(txhash);
-
-                                            Navigator.of(context).pop();
-                                          },
+                                        Expanded(
+                                          child: WalletButton(
+                                            localizeKey: "approve",
+                                            type: WalletButtonType.filled,
+                                            onPressed: _isSubmitting
+                                                ? null
+                                                : _handleApprove,
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ],

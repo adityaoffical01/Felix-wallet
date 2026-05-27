@@ -24,7 +24,7 @@ import 'package:web3dart/web3dart.dart';
 
 String showEllipse(String string) {
   int length = string.length;
-  if (length > 6) {
+  if (length > 20) {
     String prefix = string.substring(0, 10);
     String suffix = string.substring(length - 10, length);
     return "$prefix...$suffix";

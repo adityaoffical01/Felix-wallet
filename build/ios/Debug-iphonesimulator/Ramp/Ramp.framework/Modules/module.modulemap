@@ -1,0 +1,11 @@
+framework module Ramp {
+  umbrella header "Ramp-umbrella.h"
+
+  export *
+  module * { export * }
+}
+
+module Ramp.Swift {
+  header "Ramp-Swift.h"
+  requires objc
+}
