@@ -3,13 +3,13 @@
 import 'dart:math';
 
 import 'package:decimal/decimal.dart';
+import 'package:felix_wallet_crypto/core/model/token_model.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 import 'package:felix_wallet_crypto/utils/eth-utils/erc20.dart';
 import 'package:felix_wallet_crypto/core/model/network_model.dart';
-import 'package:felix_wallet_crypto/core/model/token_model.dart';
 import 'package:felix_wallet_crypto/core/remote/http.dart';
 import 'package:felix_wallet_crypto/core/remote/response-model/moralis_token_transfer.dart';
 import 'package:felix_wallet_crypto/core/remote/response-model/moralis_transaction_response.dart';

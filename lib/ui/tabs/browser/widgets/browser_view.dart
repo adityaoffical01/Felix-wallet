@@ -45,9 +45,13 @@ class _BrowserViewState extends State<BrowserView> {
   PullToRefreshController refreshController = PullToRefreshController();
   bool _isConnectDialogOpen = false;
   bool _hasShownConnectedMessage = false;
-  Map<String, dynamic> _failure(String method, String message) {
+  Map<String, dynamic> _failure(
+    String method,
+    String message, {
+    bool showUiWarning = true,
+  }) {
     debugPrint("[BrowserView][Ethereum][$method] $message");
-    if (mounted) {
+    if (showUiWarning && mounted) {
       showWarningSnackBar(
         context,
         getText(context, key: 'walletConnect'),
@@ -350,6 +354,14 @@ class _BrowserViewState extends State<BrowserView> {
       } catch (e) {
         return _failure(method, e.toString());
       }
+    }
+
+    if (method == 'eth_subscribe') {
+      return _failure(
+        method,
+        "Method $method not supported yet",
+        showUiWarning: false,
+      );
     }
 
     return _failure(method, "Method $method not supported yet");

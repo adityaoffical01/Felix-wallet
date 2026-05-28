@@ -435,6 +435,116 @@ class _NewHomeScreenState extends State<NewHomeScreen> {
                               ),
                             ),
 
+                            // Container(
+                            //   // width: double.infinity,
+                            //   padding: const EdgeInsets.all(12.0),
+                            //   decoration: BoxDecoration(
+                            //     borderRadius: appRadius(SpacingSize.m),
+                            //     color: AppColors.liteGrey.withOpacity(0.5),
+                            //     border: Border.all(
+                            //       color: AppColors.primaryColor.withOpacity(
+                            //         0.1,
+                            //       ),
+                            //       width: 1.5,
+                            //     ),
+                            //   ),
+                            //   child: Column(
+                            //     mainAxisAlignment: MainAxisAlignment.end,
+                            //     children: [
+                            //       // addHeight(SpacingSize.xs),
+                            //       // Center(
+                            //       //   child: Image.asset(
+                            //       //     'assets/images/wallet_bank.png',
+                            //       //     height: 80.0,
+                            //       //     width: 80.0,
+                            //       //     fit: BoxFit.contain,
+                            //       //   ),
+                            //       // ),
+                            //       Text(
+                            //         'Fund Your Wallet',
+                            //         style: GoogleFonts.poppins(
+                            //           fontSize: 24,
+                            //           fontWeight: FontWeight.bold,
+                            //           color: AppColors.primaryBlack,
+                            //         ),
+                            //       ),
+                            //       addHeight(SpacingSize.xxs),
+                            //       Text(
+                            //         Provider.of<WalletProvider>(
+                            //           context,
+                            //         ).getNativeBalanceFormatted(),
+                            //         style: const TextStyle(
+                            //           fontWeight: FontWeight.w600,
+                            //           fontSize: 18.0,
+                            //           color: Colors.black54,
+                            //         ),
+                            //       ),
+                            //       Text(
+                            //         Provider.of<WalletProvider>(
+                            //           context,
+                            //         ).getPreferedBalanceFormatted(),
+                            //         style: const TextStyle(
+                            //           fontWeight: FontWeight.w600,
+                            //           fontSize: 12.0,
+                            //           color: Colors.black54,
+                            //         ),
+                            //       ),
+                            //       addHeight(SpacingSize.xs),
+                            //       Container(
+                            //         padding: const EdgeInsets.symmetric(
+                            //           horizontal: 24.0,
+                            //           vertical: 10.0,
+                            //         ),
+                            //         decoration: BoxDecoration(
+                            //           borderRadius: BorderRadius.circular(12.0),
+                            //           border: Border.all(
+                            //             color: AppColors.primaryBlack,
+                            //             width: 1.5,
+                            //           ),
+                            //           // color: AppColors.primaryColor,
+                            //           // gradient: const LinearGradient(
+                            //           //   begin: Alignment.centerLeft,
+                            //           //   end: Alignment.centerRight,
+                            //           //   colors: [
+                            //           //     Color.fromARGB(255, 125, 194, 255),
+                            //           //     Color.fromARGB(255, 38, 119, 225),
+                            //           //   ],
+                            //           // ),
+                            //         ),
+                            //         child: InkWell(
+                            //           onTap: onAddressTapHandler,
+                            //           child: Row(
+                            //             spacing: 6.0,
+                            //             mainAxisAlignment:
+                            //                 MainAxisAlignment.spaceEvenly,
+                            //             children: [
+                            //               WalletText(
+                            //                 textVarient: TextVarient.body1,
+                            //                 localizeKey: showEllipse(
+                            //                   getLiveWalletProvider(context)
+                            //                       .activeWallet
+                            //                       .wallet
+                            //                       .privateKey
+                            //                       .address
+                            //                       .hex,
+                            //                 ),
+
+                            //                 color: AppColors.primaryBlack,
+                            //               ),
+
+                            //               const Icon(
+                            //                 Iconsax.copy_copy,
+                            //                 size: 16,
+                            //                 color: AppColors.primaryBlack,
+                            //               ),
+                            //             ],
+                            //           ),
+                            //         ),
+                            //       ),
+                            //       addHeight(SpacingSize.xxs),
+                            //     ],
+                            //   ),
+                            // ),
                             addHeight(SpacingSize.s),
 
                             /// ================= ACTION BUTTONS =================
